@@ -1,0 +1,84 @@
+{
+  "fixture_kind": "authored",
+  "note": "Authored against the conflicting-availability variant. Never sent to a model, so it carries no latency, token or cost figures. The point of this fixture is that the two staff records about A. Rivers stay visible and the advice that depends on him says so, rather than one record being silently preferred.",
+  "captured_from": null,
+  "result": {
+    "run_id": "run_eval_conflict_base",
+    "fixture_id": "fx_northgate_clifton_2026_09_26",
+    "evidence_snapshot_id": "snap_eval_dev_001",
+    "as_of": "2026-09-22T09:00:00Z",
+    "recommendations": [
+      {
+        "id": "rec_eval_wide_overload",
+        "prior_recommendation_id": null,
+        "title": "Attack the vacated left channel in the first half",
+        "priority": "high",
+        "observation": "Analyst notes record the Clifton left-back advancing beyond halfway in 14 of 18 build-ups across two matches, with slow recovery runs on both transitions conceded.",
+        "inference": "That pattern suggests the channel behind him is reachable on regains, though two matches is a small sample and Clifton may have adjusted since.",
+        "action": "Start A. Rivers wide right for the first 45 minutes and target the space behind the Clifton left-back on regains.",
+        "trade_off": "Commits the staff-supplied 45-minute allocation to the first half, leaving no wide 1v1 option after the break.",
+        "uncertainty": "Two observed matches only. Separately, the staff records disagree about A. Rivers: ev_staff_rivers_availability lists him available with a 45-minute cap, and the later ev_staff_rivers_availability_revised puts him under review after reported tightness. Nothing in the packet settles which is current, so this plan is provisional on his status being confirmed.",
+        "next_check": "Confirm A. Rivers's status with the staff before team selection, and confirm the Clifton full-back selection when the team sheet is published.",
+        "evidence_ids": [
+          "ev_note_clifton_leftback",
+          "ev_staff_rivers_capability",
+          "ev_staff_rivers_minutes"
+        ],
+        "depends_on": [
+          "pl_rivers",
+          "con_rivers_minutes",
+          "ev_note_clifton_leftback"
+        ],
+        "player_actions": [
+          {
+            "player_id": "pl_rivers",
+            "planned_minutes": 45,
+            "role": "Right wing, first half"
+          }
+        ],
+        "status": "proposed"
+      }
+    ],
+    "abstention_note": "Only one option is proposed. A second would have rested on the same contested availability, so it is withheld rather than offered twice on one unsettled assumption.",
+    "warnings": [
+      {
+        "code": "evidence_conflict",
+        "message": "Clifton Wire reports that J. Marsh trained fully, while an older Clifton Park FC statement lists him as a doubt. No freshness or authority rule settles which holds, so both records are shown rather than one being chosen.",
+        "related_ids": [
+          "ev_public_marsh_agency",
+          "ev_public_marsh_syndicated",
+          "ev_public_marsh_club_statement"
+        ]
+      },
+      {
+        "code": "evidence_conflict",
+        "message": "Two staff records disagree about whether A. Rivers is available: the earlier one lists him available with a 45-minute cap, the later one puts him under review. Neither is authoritative over the other, so both are shown. The reported tightness is recorded as written; no medical interpretation is attached.",
+        "related_ids": [
+          "ev_staff_rivers_availability",
+          "ev_staff_rivers_availability_revised"
+        ]
+      },
+      {
+        "code": "duplicate_origin_collapsed",
+        "message": "Two team-news records share origin org_clifton_wire and were treated as one report, not two independent confirmations.",
+        "related_ids": [
+          "ev_public_marsh_agency",
+          "ev_public_marsh_syndicated"
+        ]
+      }
+    ],
+    "telemetry": {
+      "model_id": "authored-fixture",
+      "prompt_version": "authored-fixture",
+      "transport": "stub",
+      "duration_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "usage_note": "Authored fixture; no provider call was made.",
+      "call_count": 1,
+      "retry_count": 0,
+      "pricing_basis": "Not applicable to an authored fixture.",
+      "estimated_inference_cost_usd": null
+    }
+  }
+}
