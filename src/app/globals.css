@@ -1,0 +1,43 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-surface-0: oklch(0.16 0.012 258);
+  --color-surface-1: oklch(0.2 0.014 258);
+  --color-surface-2: oklch(0.25 0.016 258);
+  --color-surface-3: oklch(0.31 0.018 258);
+  --color-ink-0: oklch(0.97 0.005 258);
+  --color-ink-1: oklch(0.83 0.012 258);
+  --color-ink-2: oklch(0.66 0.015 258);
+
+  /* Semantic colours for the three kinds of statement the UI must keep
+     visually distinct: observed fact, tactical inference, proposed action. */
+  --color-fact: oklch(0.72 0.13 205);
+  --color-inference: oklch(0.78 0.13 85);
+  --color-action: oklch(0.74 0.15 150);
+
+  --color-warn: oklch(0.76 0.15 62);
+  --color-danger: oklch(0.68 0.19 25);
+  --color-synthetic: oklch(0.72 0.14 305);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-surface-0);
+  color: var(--color-ink-0);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible focus is an acceptance criterion for the briefing and drawer, not a
+   nicety: judges are told to navigate the evidence by keyboard. */
+:focus-visible {
+  outline: 2px solid var(--color-fact);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
