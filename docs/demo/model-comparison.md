@@ -5,20 +5,20 @@ Owner: EWE-73. Harness: [`evals/`](../../evals/README.md). Rubric, fixed before 
 
 ## Status: Pending (not measured)
 
-**No comparison has been run. No latency, token or cost figure in this document is a
-measurement, because none exists.** The table below is deliberately empty rather than
-plausibly filled: EWE-73's acceptance criteria require every reported metric to trace back to
-saved run metadata, and inventing figures would fail those criteria rather than satisfy them.
+**No comparison has been measured.** Latency, token and cost cells stay empty on purpose:
+EWE-73 forbids inventing figures. A live attempt was made with `NEBIUS_API_KEY` present; it
+did not reach the provider.
 
-Two things block the measured run, and both are outside the evaluation slice:
+| Attempt | Detail |
+| --- | --- |
+| When | 2026-09-22T23:22:08Z (Node v22.22.2) |
+| Command | `npm run eval -- --mode live --repeats 2 --run-id ewe-73-measured` with defaults `SQUAD_SCREEN_MODEL_ID=Qwen/Qwen3-235B-A22B-Instruct-2507` and `SQUAD_SCREEN_COMPARISON_MODEL_ID=openai/gpt-oss-120b` |
+| Exit | 1 |
+| Result | 20/20 runs `missing_pipeline` — harness cannot import `@/server/intelligence` / `@/server/scenarios` package exports `generateRecommendations` / `reevaluateScenario` (directories exist; no `index` facade). Wall clock ~52 ms; no provider calls. |
+| Artifacts | Local only: `evals/results/ewe-73-measured/{summary.md,run.json,human-review.csv}` — every metric cell is `not measured` |
+| Side check | `npm run demo:intelligence` (live) succeeds on the same key via `src/server/runs/service.ts`; that is not an EWE-73 harness measurement |
 
-| Blocker | What it is | Who unblocks it |
-| --- | --- | --- |
-| No provider credentials on the eval machine | `NEBIUS_API_KEY` is set as a project secret, but this VM booted without it | Route the run to an agent that boots with the key present |
-| The pipeline the harness measures does not exist yet | Live mode calls `src/server/intelligence` (EWE-65) and `src/server/scenarios` (EWE-66). Until both land, the live transport fails with `missing_pipeline` and measures nothing | EWE-65, then EWE-66 |
-
-The harness itself is complete and verified against recorded output. What is missing is the
-provider and the pipeline, not the measurement apparatus.
+Unblock: add harness-facing exports matching `evals/README.md`, then re-run the command below.
 
 ## The exact command that produces this table
 
@@ -100,20 +100,10 @@ compliance and stability on one fixture, not general model quality.
 
 ## What has actually been verified
 
-So the blocker above is not a stand-in for unfinished work, here is what does run today:
-
 ```
-npm run eval                                        # 10 runs, recorded transport, exit 0
-npx vitest run --config evals/vitest.config.ts      # 67 tests pass
-npm run typecheck && npx eslint evals               # clean
+npm run eval                                        # recorded transport (harness self-check)
+npx vitest run --config evals/vitest.config.ts      # harness unit tests
+npm run typecheck && npx eslint evals               # clean when last verified
 ```
-
-The recorded run exercises all eighteen deterministic checks across the five cases and
-renders the full report, with every metric cell reading `not measured` and the output origin
-stamped on every record. The test suite pins each check failing on output that violates it —
-an invented evidence ID, an action for an unavailable player, 70 minutes against a supplied
-cap of 45, a smuggled confidence field, an unsurfaced conflict, a revision that only swaps a
-player name — so a check that stopped biting would break a test rather than produce a clean
-report.
 
 A tie or a trade-off is a valid outcome of the measured run and will be reported as one.
