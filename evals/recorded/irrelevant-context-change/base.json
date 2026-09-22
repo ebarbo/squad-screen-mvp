@@ -1,0 +1,163 @@
+{
+  "fixture_kind": "authored",
+  "note": "Authored run against the irrelevant-context-change variant, where only the Clifton kit note differs. The advice is byte-identical to the complete-evidence fixture on purpose: that identity is the property R3 checks against the baseline run. Never sent to a model, so no metrics.",
+  "captured_from": null,
+  "model_output": {
+    "recommendations": [
+      {
+        "title": "Attack the vacated left channel in the first half",
+        "priority": "high",
+        "observation": "Analyst notes record the Clifton left-back advancing beyond halfway in 14 of 18 build-ups across two matches, with slow recovery runs on both transitions conceded.",
+        "inference": "That pattern suggests the channel behind him is reachable on regains, though two matches is a small sample and Clifton may have adjusted since.",
+        "action": "Start A. Rivers wide right for the first 45 minutes and target the space behind the Clifton left-back on regains.",
+        "trade_off": "Commits the staff-supplied 45-minute allocation to the first half, leaving no wide 1v1 option after the break.",
+        "uncertainty": "Two observed matches only, and the two team-news records share one origin so they are a single report republished rather than independent corroboration.",
+        "next_check": "Confirm the Clifton full-back selection when the team sheet is published.",
+        "evidence_ids": [
+          "ev_note_clifton_leftback",
+          "ev_staff_rivers_capability",
+          "ev_staff_rivers_minutes"
+        ],
+        "depends_on": [
+          "pl_rivers",
+          "con_rivers_minutes",
+          "ev_note_clifton_leftback"
+        ],
+        "player_actions": [
+          {
+            "player_id": "pl_rivers",
+            "planned_minutes": 45,
+            "role": "Right wing, first half"
+          }
+        ],
+        "prior_recommendation_id": null
+      },
+      {
+        "title": "Use central progression to reach the same channel after the break",
+        "priority": "medium",
+        "observation": "Staff logged T. Okonkwo repeatedly breaking the first line of pressure in central rondo work this week.",
+        "inference": "With the wide allocation spent, working through the middle is the supported way to keep reaching the same area in the second half.",
+        "action": "Build through T. Okonkwo centrally after the hour and attack the left channel on second-phase regains.",
+        "trade_off": "Slower progression than a direct wide 1v1, and it concedes the initiative in the first phase.",
+        "uncertainty": "No supplied observation shows T. Okonkwo performing this specifically against a high defensive line.",
+        "next_check": "Ask staff whether any session this week put him against a high line.",
+        "evidence_ids": [
+          "ev_staff_okonkwo_capability",
+          "ev_note_clifton_leftback"
+        ],
+        "depends_on": [
+          "pl_okonkwo",
+          "ev_staff_okonkwo_capability"
+        ],
+        "player_actions": [
+          {
+            "player_id": "pl_okonkwo",
+            "planned_minutes": null,
+            "role": "Central progression"
+          }
+        ],
+        "prior_recommendation_id": null
+      }
+    ],
+    "abstention_note": "Two options are supported by the supplied evidence. A third would not be."
+  },
+  "result": {
+    "run_id": "run_eval_irrelevant_base",
+    "fixture_id": "fx_northgate_clifton_2026_09_26",
+    "evidence_snapshot_id": "snap_eval_dev_001",
+    "as_of": "2026-09-22T09:00:00Z",
+    "recommendations": [
+      {
+        "id": "rec_eval_wide_overload",
+        "prior_recommendation_id": null,
+        "title": "Attack the vacated left channel in the first half",
+        "priority": "high",
+        "observation": "Analyst notes record the Clifton left-back advancing beyond halfway in 14 of 18 build-ups across two matches, with slow recovery runs on both transitions conceded.",
+        "inference": "That pattern suggests the channel behind him is reachable on regains, though two matches is a small sample and Clifton may have adjusted since.",
+        "action": "Start A. Rivers wide right for the first 45 minutes and target the space behind the Clifton left-back on regains.",
+        "trade_off": "Commits the staff-supplied 45-minute allocation to the first half, leaving no wide 1v1 option after the break.",
+        "uncertainty": "Two observed matches only, and the two team-news records share one origin so they are a single report republished rather than independent corroboration.",
+        "next_check": "Confirm the Clifton full-back selection when the team sheet is published.",
+        "evidence_ids": [
+          "ev_note_clifton_leftback",
+          "ev_staff_rivers_capability",
+          "ev_staff_rivers_minutes"
+        ],
+        "depends_on": [
+          "pl_rivers",
+          "con_rivers_minutes",
+          "ev_note_clifton_leftback"
+        ],
+        "player_actions": [
+          {
+            "player_id": "pl_rivers",
+            "planned_minutes": 45,
+            "role": "Right wing, first half"
+          }
+        ],
+        "status": "proposed"
+      },
+      {
+        "id": "rec_eval_central_progression",
+        "prior_recommendation_id": null,
+        "title": "Use central progression to reach the same channel after the break",
+        "priority": "medium",
+        "observation": "Staff logged T. Okonkwo repeatedly breaking the first line of pressure in central rondo work this week.",
+        "inference": "With the wide allocation spent, working through the middle is the supported way to keep reaching the same area in the second half.",
+        "action": "Build through T. Okonkwo centrally after the hour and attack the left channel on second-phase regains.",
+        "trade_off": "Slower progression than a direct wide 1v1, and it concedes the initiative in the first phase.",
+        "uncertainty": "No supplied observation shows T. Okonkwo performing this specifically against a high defensive line.",
+        "next_check": "Ask staff whether any session this week put him against a high line.",
+        "evidence_ids": [
+          "ev_staff_okonkwo_capability",
+          "ev_note_clifton_leftback"
+        ],
+        "depends_on": [
+          "pl_okonkwo",
+          "ev_staff_okonkwo_capability"
+        ],
+        "player_actions": [
+          {
+            "player_id": "pl_okonkwo",
+            "planned_minutes": null,
+            "role": "Central progression"
+          }
+        ],
+        "status": "proposed"
+      }
+    ],
+    "abstention_note": "Two options are supported by the supplied evidence. A third would not be.",
+    "warnings": [
+      {
+        "code": "evidence_conflict",
+        "message": "Clifton Wire reports that J. Marsh trained fully, while an older Clifton Park FC statement lists him as a doubt. No freshness or authority rule settles which holds, so both records are shown rather than one being chosen.",
+        "related_ids": [
+          "ev_public_marsh_agency",
+          "ev_public_marsh_syndicated",
+          "ev_public_marsh_club_statement"
+        ]
+      },
+      {
+        "code": "duplicate_origin_collapsed",
+        "message": "Two team-news records share origin org_clifton_wire and were treated as one report, not two independent confirmations.",
+        "related_ids": [
+          "ev_public_marsh_agency",
+          "ev_public_marsh_syndicated"
+        ]
+      }
+    ],
+    "telemetry": {
+      "model_id": "authored-fixture",
+      "prompt_version": "authored-fixture",
+      "transport": "stub",
+      "duration_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "usage_note": "Authored fixture; no provider call was made.",
+      "call_count": 1,
+      "retry_count": 0,
+      "pricing_basis": "Not applicable to an authored fixture.",
+      "estimated_inference_cost_usd": null
+    }
+  }
+}
