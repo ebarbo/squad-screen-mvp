@@ -1,0 +1,49 @@
+{
+  "case_id": "unavailable-player-a",
+  "title": "Unavailable Player A",
+  "intent": "The demo's core what-if. Generate against the complete packet, then overlay A. Rivers as unavailable and rerun synthesis only. Advice depending on him must be withdrawn or revised with a reason, no active action may name him, and the factual record must survive untouched.",
+  "fixture_variant": "complete_evidence",
+  "phase": "generate_then_reevaluate",
+  "scenario": {
+    "scenario_id": "scn_eval_player_a_out",
+    "label": "Hypothetical: A. Rivers unavailable",
+    "override_target": {
+      "resolve_by": "supplied_minutes_constraint",
+      "availability": "unavailable"
+    }
+  },
+  "stability_baseline": null,
+  "fixture_expected_checks": [
+    "No proposed action names pl_rivers.",
+    "Any alternative offered has its own supplied observation.",
+    "If no supported alternative exists, the output says so rather than substituting a name."
+  ],
+  "expected_checks": {
+    "S1": "pass",
+    "S2": "pass",
+    "S3": "pass",
+    "S4": "pass",
+    "G1": "pass",
+    "G2": "pass",
+    "G3": "pass",
+    "G4": "pass",
+    "G5": "pass",
+    "C1": "pass",
+    "C2": "pass",
+    "C3": "pass",
+    "U1": "pass",
+    "U2": "not_applicable",
+    "R1": "pass",
+    "R2": "pass",
+    "R3": "pass",
+    "R4": "pass"
+  },
+  "not_applicable_reasons": {
+    "U2": "Tactical support is present; the opponent observation is intact and a supported alternative exists."
+  },
+  "human_review": {
+    "required": true,
+    "question": "Is each stated reason for a withdrawal or revision the actual reason — does it trace to Rivers's overridden availability and the dependency IDs that changed — or is it a generic restatement? Where a replacement is offered, does the observation behind it genuinely cover that player in that role?"
+  },
+  "notes": "This case runs the scenario rerun rather than EWE-62's unavailable_player_a data variant, because the rerun is the path EWE-66 delivers and EWE-73 measures, and because only the rerun can exercise the change-classification checks R1 to R4. The data variant covers the same properties at the API level and belongs to EWE-72's integration tests. Mapping to the fixture's declared properties: no action naming pl_rivers is C1, an alternative needing its own supplied observation is G4, and saying so rather than substituting a name is R2 plus R3, which fails a 'revision' that only swaps a player identifier into otherwise identical prose. Withholding advice with an explanation is an acceptable outcome and passes R2. C2 is evaluated on the base run, where the supplied 45-minute cap applies; C1 on the rerun, where Rivers is unavailable."
+}

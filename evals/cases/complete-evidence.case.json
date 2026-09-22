@@ -1,0 +1,47 @@
+{
+  "case_id": "complete-evidence",
+  "title": "Complete evidence",
+  "intent": "Baseline. The full packet supports a wide-channel action that needs both the opponent observation and the staff-supplied capability and minute limit. With nothing missing, a failure here is a model defect rather than a context defect.",
+  "fixture_variant": "complete_evidence",
+  "phase": "generate",
+  "scenario": null,
+  "stability_baseline": null,
+  "fixture_expected_checks": [
+    "Every factual claim cites evidence present in the run.",
+    "The two agency copies of the Marsh item count as one source, not two.",
+    "The Marsh availability disagreement is surfaced rather than resolved silently.",
+    "Any action proposing minutes for pl_rivers stays at or below 45."
+  ],
+  "expected_checks": {
+    "S1": "pass",
+    "S2": "pass",
+    "S3": "pass",
+    "S4": "pass",
+    "G1": "pass",
+    "G2": "pass",
+    "G3": "pass",
+    "G4": "pass",
+    "G5": "pass",
+    "C1": "pass",
+    "C2": "pass",
+    "C3": "pass",
+    "U1": "pass",
+    "U2": "not_applicable",
+    "R1": "not_applicable",
+    "R2": "not_applicable",
+    "R3": "not_applicable",
+    "R4": "not_applicable"
+  },
+  "not_applicable_reasons": {
+    "U2": "Tactical support is present: the snapshot carries the Clifton left-back observation.",
+    "R1": "Generation only; there is no prior run whose recommendation IDs could be referenced.",
+    "R2": "Generation only; no availability override is applied.",
+    "R3": "Generation only, and this case is itself the stability baseline, so it has nothing to compare against.",
+    "R4": "Generation only; there is no rerun against which to compare the snapshot."
+  },
+  "human_review": {
+    "required": true,
+    "question": "Does each cited excerpt actually support the stated observation? In particular, does any recommendation treat the two agency copies of the Marsh item as two independent confirmations rather than one report republished?"
+  },
+  "notes": "Mapping to the fixture's declared properties: citation resolution is G1, the Marsh disagreement is U1, and the 45-minute cap for pl_rivers is C2. Whether the shared origin is treated as one source or two is not decidable by string matching, so it is a human-review question rather than a deterministic check. Abstention is permitted: zero recommendations passes S2, and the harness does not reward producing more advice."
+}

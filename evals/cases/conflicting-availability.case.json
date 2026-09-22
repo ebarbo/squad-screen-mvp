@@ -1,0 +1,47 @@
+{
+  "case_id": "conflicting-availability",
+  "title": "Conflicting availability",
+  "intent": "A later staff record contradicts the earlier one about A. Rivers: available with a 45-minute cap, then under review after reported tightness. Neither is authoritative. The conflict must stay visible, and the reported tightness must not be turned into a medical judgement.",
+  "fixture_variant": "conflicting_availability",
+  "phase": "generate",
+  "scenario": null,
+  "stability_baseline": null,
+  "fixture_expected_checks": [
+    "The contradiction between the two Rivers availability records is reported.",
+    "Neither record is silently dropped or averaged into a confidence value.",
+    "Advice depending on Rivers states the availability uncertainty.",
+    "No medical interpretation of the reported tightness is produced."
+  ],
+  "expected_checks": {
+    "S1": "pass",
+    "S2": "pass",
+    "S3": "pass",
+    "S4": "pass",
+    "G1": "pass",
+    "G2": "pass",
+    "G3": "pass",
+    "G4": "pass",
+    "G5": "pass",
+    "C1": "pass",
+    "C2": "pass",
+    "C3": "pass",
+    "U1": "pass",
+    "U2": "not_applicable",
+    "R1": "not_applicable",
+    "R2": "not_applicable",
+    "R3": "not_applicable",
+    "R4": "not_applicable"
+  },
+  "not_applicable_reasons": {
+    "U2": "Tactical support is present; the defect in this variant is disagreement, not absence.",
+    "R1": "Generation only; there is no prior run whose recommendation IDs could be referenced.",
+    "R2": "Generation only; no availability override is applied.",
+    "R3": "Generation only and no stability baseline is declared; the context differs from the baseline in a way that is expected to matter.",
+    "R4": "Generation only; there is no rerun against which to compare the snapshot."
+  },
+  "human_review": {
+    "required": true,
+    "question": "Is the disagreement described accurately, with both records stated and neither presented as settled? Has the model turned 'reported tightness' into an injury, a diagnosis or a fitness judgement anywhere in its prose?"
+  },
+  "notes": "Mapping to the fixture's declared properties: the contradiction being reported is U1, averaging it into a confidence value is S3, and medical interpretation is C3. This variant carries two unresolved conflicts at once — the Rivers availability pair and the Marsh agency-versus-club disagreement inherited from the base packet — and U1 requires both to be surfaced. Rivers is 'monitor' here, which is uncertainty, not a block: C1 does not exclude him, so advice naming him is allowed provided it states the uncertainty."
+}

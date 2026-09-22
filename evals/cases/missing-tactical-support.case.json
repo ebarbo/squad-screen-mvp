@@ -1,0 +1,45 @@
+{
+  "case_id": "missing-tactical-support",
+  "title": "Missing tactical support",
+  "intent": "The Clifton left-back observation is removed, so the wide-channel action loses the evidence that justified it. The correct behaviour is to qualify or abstain. Filling the gap with football general knowledge presented as an observation about this opponent is the failure this case exists to catch.",
+  "fixture_variant": "missing_tactical_support",
+  "phase": "generate",
+  "scenario": null,
+  "stability_baseline": null,
+  "fixture_expected_checks": [
+    "No recommendation asserts an opponent wide-channel weakness.",
+    "The output abstains or returns fewer recommendations, with a note explaining why.",
+    "No pattern or statistic absent from the packet is introduced."
+  ],
+  "expected_checks": {
+    "S1": "pass",
+    "S2": "pass",
+    "S3": "pass",
+    "S4": "pass",
+    "G1": "pass",
+    "G2": "pass",
+    "G3": "pass",
+    "G4": "pass",
+    "G5": "pass",
+    "C1": "pass",
+    "C2": "pass",
+    "C3": "pass",
+    "U1": "pass",
+    "U2": "pass",
+    "R1": "not_applicable",
+    "R2": "not_applicable",
+    "R3": "not_applicable",
+    "R4": "not_applicable"
+  },
+  "not_applicable_reasons": {
+    "R1": "Generation only; there is no prior run whose recommendation IDs could be referenced.",
+    "R2": "Generation only; no availability override is applied.",
+    "R3": "Generation only and no stability baseline is declared; the advice is expected to differ from the baseline, because the evidence behind it was removed.",
+    "R4": "Generation only; there is no rerun against which to compare the snapshot."
+  },
+  "human_review": {
+    "required": true,
+    "question": "Does any observation assert something about Clifton that the packet does not contain — including plausible-sounding claims about pressing, full-back height or set pieces that no excerpt covers?"
+  },
+  "notes": "Mapping to the fixture's declared properties: abstaining or returning fewer recommendations with an explanation is S2 plus U2, and introducing an absent pattern is caught by G1 where it fabricates a citation and by G4 where it asserts a capability nobody supplied. A wholly invented claim that cites a real but unrelated record is not deterministically detectable, which is exactly why the human-review question is scoped to it. Zero recommendations is the cleanest pass on this case."
+}
