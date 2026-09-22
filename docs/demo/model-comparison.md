@@ -3,24 +3,26 @@
 Owner: EWE-73. Harness: [`evals/`](../../evals/README.md). Rubric, fixed before any run:
 [`evals/rubric.md`](../../evals/rubric.md).
 
-## Status: Pending (not measured)
+## Status: Measured (live)
 
-**No comparison has been measured.** Latency, token and cost cells stay empty on purpose:
-EWE-73 forbids inventing figures. A live attempt was made with `NEBIUS_API_KEY` present; it
-did not reach the provider.
+Live comparison run `ewe-73-measured` completed on 2026-09-22 against `main` at
+`9e24018` (pipeline facades present). Numbers below are copied from
+`evals/results/ewe-73-measured/summary.md` / `run.json`. Nothing here is estimated
+or invented.
 
-| Attempt | Detail |
+| Field | Value |
 | --- | --- |
-| When | 2026-09-22T23:22:08Z (Node v22.22.2) |
-| Command | `npm run eval -- --mode live --repeats 2 --run-id ewe-73-measured` with defaults `SQUAD_SCREEN_MODEL_ID=Qwen/Qwen3-235B-A22B-Instruct-2507` and `SQUAD_SCREEN_COMPARISON_MODEL_ID=openai/gpt-oss-120b` |
-| Exit | 1 |
-| Result | 20/20 runs `missing_pipeline` — harness cannot import `@/server/intelligence` / `@/server/scenarios` package exports `generateRecommendations` / `reevaluateScenario` (directories exist; no `index` facade). Wall clock ~52 ms; no provider calls. |
-| Artifacts | Local only: `evals/results/ewe-73-measured/{summary.md,run.json,human-review.csv}` — every metric cell is `not measured` |
-| Side check | `npm run demo:intelligence` (live) succeeds on the same key via `src/server/runs/service.ts`; that is not an EWE-73 harness measurement |
+| When | 2026-09-22T23:43:51Z → 2026-09-22T23:55:21Z (Node v22.22.2) |
+| Command | `npm run eval -- --mode live --repeats 2 --run-id ewe-73-measured` |
+| Models | `Qwen/Qwen3-235B-A22B-Instruct-2507` (primary), `openai/gpt-oss-120b` (comparison) |
+| Shared input fingerprint | `c94a6a292139ab30e20bfe15427532c9c5894c983b8fa7035289812a5a2952e5` |
+| Prompt version | `strategy-35d7138deca5` |
+| Primary | 10/10 runs completed (`live`) |
+| Comparison | 2/10 completed (`live`); 8/10 `harness_error` (6× provider timeout 30000 ms, 2× HTTP 502) |
+| Harness exit | 1 (contract-check expectation deltas; metrics were still written) |
+| Cost | null — `SQUAD_SCREEN_PRICE_INPUT_PER_MTOK` / `SQUAD_SCREEN_PRICE_OUTPUT_PER_MTOK` unset; Token Factory exposes no pricing endpoint |
 
-Unblock: add harness-facing exports matching `evals/README.md`, then re-run the command below.
-
-## The exact command that produces this table
+## The exact command that produced this table
 
 ```bash
 export NEBIUS_API_KEY=...                     # server-side only, never committed
@@ -32,7 +34,7 @@ npm run eval -- --mode live --repeats 2 --run-id ewe-73-measured
 ```
 
 That writes `evals/results/ewe-73-measured/` containing `summary.md`, `run.json` and
-`human-review.csv`. Every cell in the table below is then copied from `summary.md`, and every
+`human-review.csv`. Every cell in the table below is copied from `summary.md`, and every
 figure in `summary.md` traces to a field in `run.json`.
 
 The source-entailment column needs a person. After the run:
@@ -47,22 +49,30 @@ npm run eval -- --mode live --repeats 2 --run-id ewe-73-reviewed \
 
 | Metric | `Qwen/Qwen3-235B-A22B-Instruct-2507` | `openai/gpt-oss-120b` |
 | --- | --- | --- |
-| Cases fully compliant | Pending (not measured) | Pending (not measured) |
-| Deterministic checks passed | Pending (not measured) | Pending (not measured) |
-| Deterministic checks failed | Pending (not measured) | Pending (not measured) |
-| Median latency | Pending (not measured) | Pending (not measured) |
-| Total input tokens | Pending (not measured) | Pending (not measured) |
-| Total output tokens | Pending (not measured) | Pending (not measured) |
-| Retries | Pending (not measured) | Pending (not measured) |
-| Total calls | Pending (not measured) | Pending (not measured) |
-| Estimated inference cost | Pending (not measured) — see note below | Pending (not measured) — see note below |
+| Cases fully compliant | 0 / 5 | 0 / 5 |
+| Deterministic checks passed | 122 | 23 |
+| Deterministic checks failed | 20 | 4 |
+| Checks n/a | 38 | 9 |
+| Checks not measured | 0 | 144 |
+| Runs completed / errored | 10 / 0 | 2 / 8 |
+| Median latency | 5729 ms (12/12 measured calls) | 32224 ms (2/10 runs reported duration; 8 did not — partial median) |
+| Total input tokens | 59149 | not measured (8/10 runs missing; partial sum withheld) |
+| Total output tokens | 7761 | not measured (8/10 runs missing; partial sum withheld) |
+| Retries | 0 | not measured (8/10 runs missing; partial sum withheld) |
+| Total calls | 12 | not measured (8/10 runs missing; partial sum withheld) |
+| Estimated inference cost | not measured — prices unset (see below) | not measured — prices unset; also incomplete runs |
 | Source entailment (human) | Pending human review | Pending human review |
 
-**Cost will most likely stay empty even after a successful run.** The Token Factory API
-exposes no pricing or billing endpoint, so a per-token price can only come from the Nebius
-console. Unless `SQUAD_SCREEN_PRICE_INPUT_PER_MTOK` and `SQUAD_SCREEN_PRICE_OUTPUT_PER_MTOK`
-are supplied, the harness reports cost as not measured with that reason. It does not derive
-a price from token counts, from latency, or from another provider's published rates.
+**Cost is null for both models.** `SQUAD_SCREEN_PRICE_INPUT_PER_MTOK` and
+`SQUAD_SCREEN_PRICE_OUTPUT_PER_MTOK` were unset. The Token Factory API exposes no
+pricing or billing endpoint, so a per-token price can only come from the Nebius
+console. The harness does not derive a price from token counts, latency, or another
+provider's rates.
+
+**Comparison-model incompleteness is load-bearing.** Six comparison runs hit the
+configured 30000 ms provider timeout; two returned HTTP 502. The harness therefore
+refuses to publish token/call/retry totals for that model. The latency cell is the
+median over the two completed runs only, with that coverage stated above.
 
 ## Settings, fixed and identical across both models
 
@@ -74,7 +84,7 @@ a price from token counts, from latency, or from another provider's published ra
 | Temperature / top-p / max output tokens / seed | 0 / 1 / 2048 / 7 |
 | Cache policy | Disabled. Every repeat is an independent call; no response is reused across repeats or models |
 | Timeout / max retries | 30000 ms / 2 |
-| Input fingerprint | SHA-256 over the canonical context, prompt, output schema and settings. The harness aborts the comparison if the two models did not see identical bytes |
+| Input fingerprint | SHA-256 over the canonical context, prompt, output schema and settings. Shared fingerprint on this run: `c94a6a292139ab30e20bfe15427532c9c5894c983b8fa7035289812a5a2952e5` |
 
 ## What this comparison can and cannot show
 
@@ -98,12 +108,17 @@ rather than workflow architecture. That separation is the point of the experimen
 **Small sample:** 5 fixed cases, 2 repeats per case per model. These results show contract
 compliance and stability on one fixture, not general model quality.
 
+On this run neither model produced a fully compliant case. Primary failures concentrated on
+`U1` (unresolved Marsh conflict not surfaced), `G4` (player actions without citing
+observations), `U2` / `R2` / `R3` on the affected cases. Comparison coverage is too thin for
+a fair check-by-check ranking against primary.
+
 ## What has actually been verified
 
 ```
+npm run eval -- --mode live --repeats 2 --run-id ewe-73-measured   # this document
 npm run eval                                        # recorded transport (harness self-check)
 npx vitest run --config evals/vitest.config.ts      # harness unit tests
-npm run typecheck && npx eslint evals               # clean when last verified
 ```
 
 A tie or a trade-off is a valid outcome of the measured run and will be reported as one.
