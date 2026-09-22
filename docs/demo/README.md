@@ -6,14 +6,16 @@ Material for the five-minute demonstration and the event submission packet, for 
 
 Three different issues write into this directory. **Do not edit a file you do not own.**
 
-| File | Owner | Status |
+| File | Owner | Where it is |
 | --- | --- | --- |
-| [`five-minute-demo-script.md`](./five-minute-demo-script.md) | [EWE-75](https://linear.app/ewerton-barbosa/issue/EWE-75/delivery-package-and-rehearse-the-five-minute-demo-and-submission) | Drafted |
-| [`operational-runbook.md`](./operational-runbook.md) | EWE-75 | Drafted; commands pending EWE-60 |
-| [`submission-checklist.md`](./submission-checklist.md) | EWE-75 | Drafted; every item unsatisfied |
-| [`limitations.md`](./limitations.md) | EWE-75 | Drafted; needs a pass after EWE-72/73/74 |
-| `model-comparison.md` | [EWE-73](https://linear.app/ewerton-barbosa/issue/EWE-73/eval-run-the-controlled-comparison-and-publish-observed-results), evaluation slice | **Not yet written** |
-| `customer-and-pilot.md` | [EWE-74](https://linear.app/ewerton-barbosa/issue/EWE-74/product-establish-named-customer-problem-evidence-and-four-fixture) | **Not yet written** |
+| [`five-minute-demo-script.md`](./five-minute-demo-script.md) | [EWE-75](https://linear.app/ewerton-barbosa/issue/EWE-75/delivery-package-and-rehearse-the-five-minute-demo-and-submission) | This branch |
+| [`operational-runbook.md`](./operational-runbook.md) | EWE-75 | This branch |
+| [`submission-checklist.md`](./submission-checklist.md) | EWE-75 | This branch |
+| [`limitations.md`](./limitations.md) | EWE-75 | This branch |
+| `customer-and-pilot.md` | [EWE-74](https://linear.app/ewerton-barbosa/issue/EWE-74/product-establish-named-customer-problem-evidence-and-four-fixture) | **Branch `feat/ewe-74-customer-and-pilot`, at `b5093cc`** |
+| `model-comparison.md` | [EWE-73](https://linear.app/ewerton-barbosa/issue/EWE-73/eval-run-the-controlled-comparison-and-publish-observed-results), evaluation slice | **Not yet written**, and no branch exists for it |
+
+> **`docs/` is not on `main` at all.** Every file above lives only on a feature branch, so the relative links between them do not resolve until the branches converge. In particular, this document's links to `customer-and-pilot.md` will 404 from here — read it on its own branch.
 
 ## Read them in this order
 
@@ -22,10 +24,10 @@ Three different issues write into this directory. **Do not edit a file you do no
 3. **[`submission-checklist.md`](./submission-checklist.md)** — the packet contents, the acceptance criteria, and the claims gate to walk before freeze.
 4. **[`limitations.md`](./limitations.md)** — what the demo does not establish.
 
-## Current state, stated plainly
+## Current state
 
-These are **drafts written ahead of the build**. EWE-75 has not started; its blockers EWE-72, EWE-73 and EWE-74 are open, and at the time of writing `main` held only `.gitignore`.
+`main` was at `b6aeea1` when this was written and carries EWE-60 through EWE-63 — the scaffold and command set, the shared contracts, CI, the fixture packet and the Token Factory adapter. The server pipeline from EWE-64 onward, the UI, and `docs/` are not there yet. **`main` is moving every few minutes**, so re-check before assembling the packet.
 
-Nothing here reports a measurement, a screenshot, a recording or a customer. Where a value would go, there is a placeholder naming the issue or the credential that would fill it. Each document uses the same three tags: **VERIFIED** (observed), **SPECIFIED** (required behaviour, code does not exist yet), **PENDING** (blocked).
+The commands in the runbook are real. Everything about what appears on screen is still specification, no measurement of any kind exists, and **no live provider call has been made from this project**. Each document uses the same three tags: **VERIFIED** (observed), **SPECIFIED** (required behaviour, not yet built), **PENDING** (blocked).
 
 Blocked on Ewerton: `NEBIUS_API_KEY` and `SQUAD_SCREEN_MODEL_ID` for live inference, `SQUAD_SCREEN_COMPARISON_MODEL_ID` for the comparison, and the decision on whether a target club is named.
