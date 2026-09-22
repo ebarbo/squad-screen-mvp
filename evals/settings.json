@@ -1,0 +1,15 @@
+{
+  "settings_version": "1",
+  "note": "Held identical across every model in a comparison. Any edit invalidates prior measured runs and requires re-running all models. Included verbatim in the input fingerprint.",
+  "decoding": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_output_tokens": 2048,
+    "seed": 7
+  },
+  "repeats_per_case": 2,
+  "cache_policy": "disabled — every repeat is an independent provider call, and no response is reused across repeats or models",
+  "timeout_ms": 30000,
+  "max_retries": 2,
+  "small_sample_disclosure": "Small sample: 5 fixed cases, 2 repeats per case per model. These results show contract compliance and stability on one fixture, not general model quality."
+}

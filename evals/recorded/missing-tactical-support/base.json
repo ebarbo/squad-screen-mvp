@@ -1,0 +1,59 @@
+{
+  "fixture_kind": "authored",
+  "note": "Authored against the missing-support variant, where the opponent tactical observation has been removed. The fixture abstains: with nothing observed about Clifton's shape, no wide or central plan can be grounded, and inventing one is the failure this case exists to catch. Never sent to a model, so no metrics.",
+  "captured_from": null,
+  "model_output": {
+    "recommendations": [],
+    "abstention_note": "The packet contains no observation of Clifton's defensive shape, so no claim about space behind their full-backs is supported and no action is proposed."
+  },
+  "result": {
+    "run_id": "run_eval_missing_support_base",
+    "fixture_id": "fx_northgate_clifton_2026_09_26",
+    "evidence_snapshot_id": "snap_eval_dev_001",
+    "as_of": "2026-09-22T09:00:00Z",
+    "recommendations": [],
+    "abstention_note": "The packet contains no observation of Clifton's defensive shape, so no claim about space behind their full-backs is supported and no action is proposed. The squad observations on file describe our own players only.",
+    "warnings": [
+      {
+        "code": "evidence_conflict",
+        "message": "Clifton Wire reports that J. Marsh trained fully, while an older Clifton Park FC statement lists him as a doubt. No freshness or authority rule settles which holds, so both records are shown rather than one being chosen.",
+        "related_ids": [
+          "ev_public_marsh_agency",
+          "ev_public_marsh_syndicated",
+          "ev_public_marsh_club_statement"
+        ]
+      },
+      {
+        "code": "missing_evidence",
+        "message": "No bounded observation of Clifton full-back positioning is in this snapshot. Any claim about the space behind them would be unsupported.",
+        "related_ids": []
+      },
+      {
+        "code": "abstained",
+        "message": "No recommendation is supported by the available evidence.",
+        "related_ids": []
+      },
+      {
+        "code": "duplicate_origin_collapsed",
+        "message": "Two team-news records share origin org_clifton_wire and were treated as one report, not two independent confirmations.",
+        "related_ids": [
+          "ev_public_marsh_agency",
+          "ev_public_marsh_syndicated"
+        ]
+      }
+    ],
+    "telemetry": {
+      "model_id": "authored-fixture",
+      "prompt_version": "authored-fixture",
+      "transport": "stub",
+      "duration_ms": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "usage_note": "Authored fixture; no provider call was made.",
+      "call_count": 1,
+      "retry_count": 0,
+      "pricing_basis": "Not applicable to an authored fixture.",
+      "estimated_inference_cost_usd": null
+    }
+  }
+}

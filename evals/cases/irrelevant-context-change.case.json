@@ -1,0 +1,44 @@
+{
+  "case_id": "irrelevant-context-change",
+  "title": "Irrelevant context change",
+  "intent": "Stability control. The Clifton kit note changes: accurate, dated, and with no bearing on the decision. The advice must come back byte-identical to the complete-evidence run — not rewritten, not reworded, not re-prioritised.",
+  "fixture_variant": "irrelevant_context_change",
+  "phase": "generate",
+  "scenario": null,
+  "stability_baseline": "complete-evidence",
+  "fixture_expected_checks": [
+    "The actionable content of the wide-channel advice is unchanged from the complete-evidence run.",
+    "Any variation is reported as observed run-to-run variance, not as a response to the kit change."
+  ],
+  "expected_checks": {
+    "S1": "pass",
+    "S2": "pass",
+    "S3": "pass",
+    "S4": "pass",
+    "G1": "pass",
+    "G2": "pass",
+    "G3": "pass",
+    "G4": "pass",
+    "G5": "pass",
+    "C1": "pass",
+    "C2": "pass",
+    "C3": "pass",
+    "U1": "pass",
+    "U2": "not_applicable",
+    "R1": "not_applicable",
+    "R2": "not_applicable",
+    "R3": "pass",
+    "R4": "not_applicable"
+  },
+  "not_applicable_reasons": {
+    "U2": "Tactical support is present in this variant; the opponent observation is intact.",
+    "R1": "Generation only; there is no prior run whose recommendation IDs could be referenced.",
+    "R2": "Generation only; no availability override is applied, and requiring a revision here would reward churn.",
+    "R4": "Generation only; there is no rerun against which to compare the snapshot."
+  },
+  "human_review": {
+    "required": true,
+    "question": "Where the advice does differ from the baseline run, is the difference plausibly ordinary run-to-run variance, or has the model treated the kit note as decision-relevant?"
+  },
+  "notes": "EWE-62 models this as a data change rather than an availability override, and the property it asserts is a comparison against the complete-evidence run. R3 therefore compares the multiset of actionable content across the two runs rather than matching recommendation IDs, which do not carry across independent runs. A difference is reported as a finding, not silently attributed to the kit change."
+}
