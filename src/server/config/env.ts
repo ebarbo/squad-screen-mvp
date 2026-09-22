@@ -14,6 +14,28 @@ export const DEFAULT_BASE_URL = 'https://api.studio.nebius.com/v1';
 export const DEFAULT_TIMEOUT_MS = 30_000;
 export const DEFAULT_MAX_RETRIES = 2;
 
+/**
+ * Verified available in the event account against the base URL above.
+ *
+ * These are identifiers, not secrets, so they are defaulted rather than
+ * required: hard-failing on a missing model ID buys nothing when a known-good
+ * value exists. The API key has no equivalent default and stays mandatory.
+ *
+ * The primary is the non-thinking `Instruct` variant on purpose. It is
+ * Apache-2.0, instruction-tuned, and returns the answer directly with no
+ * reasoning preamble to strip.
+ */
+export const DEFAULT_MODEL_ID = 'Qwen/Qwen3-235B-A22B-Instruct-2507';
+
+/**
+ * Comparison model for EWE-73. This one is a reasoning model: it puts its chain
+ * of thought in a separate `reasoning` field and leaves `content` clean, so no
+ * parsing change is needed — but it spends substantially more completion tokens
+ * for an equivalent answer. Token accounting therefore reads the provider's
+ * usage fields and never estimates from response length.
+ */
+export const DEFAULT_COMPARISON_MODEL_ID = 'openai/gpt-oss-120b';
+
 export interface ProviderConfig {
   readonly mode: ModelMode;
   readonly apiKey: string | null;
@@ -82,10 +104,10 @@ function resolveMode(env: Env, problems: ConfigProblem[]): ModelMode {
 /**
  * Resolve provider configuration from the environment.
  *
- * In `live` mode an API key and model ID are mandatory: without them we cannot
- * make a real call, and returning a canned success instead is explicitly
- * forbidden by the project contract. In `stub` mode neither is required, but the
- * transport labels every response it produces so it cannot be mistaken for live
+ * In `live` mode an API key is mandatory: without it we cannot make a real
+ * call, and returning a canned success instead is explicitly forbidden by the
+ * project contract. In `stub` mode nothing is required, but the transport
+ * labels every response it produces so it cannot be mistaken for live
  * inference.
  */
 export function loadProviderConfig(env: Env = process.env): ConfigResult {
@@ -95,22 +117,16 @@ export function loadProviderConfig(env: Env = process.env): ConfigResult {
   const apiKey = read(env, 'NEBIUS_API_KEY');
   const modelId = read(env, 'SQUAD_SCREEN_MODEL_ID');
 
-  if (mode === 'live') {
-    if (apiKey === null) {
-      problems.push({
-        variable: 'NEBIUS_API_KEY',
-        message:
-          'Not set. Add the Nebius Token Factory API key for the event account to .env.local, ' +
-          'or set SQUAD_SCREEN_MODEL_MODE=stub to run offline with a labeled stub transport.',
-      });
-    }
-    if (modelId === null) {
-      problems.push({
-        variable: 'SQUAD_SCREEN_MODEL_ID',
-        message:
-          'Not set. Add the approved open-weight model ID verified as available in the event account.',
-      });
-    }
+  // The key is the only value with no safe default: there is nothing to fall
+  // back to, and guessing would turn a configuration mistake into a failed call
+  // at demo time.
+  if (mode === 'live' && apiKey === null) {
+    problems.push({
+      variable: 'NEBIUS_API_KEY',
+      message:
+        'Not set. Add the Nebius Token Factory API key for the event account to .env.local, ' +
+        'or set SQUAD_SCREEN_MODEL_MODE=stub to run offline with a labeled stub transport.',
+    });
   }
 
   const timeoutMs = readNumber(env, 'SQUAD_SCREEN_MODEL_TIMEOUT_MS', DEFAULT_TIMEOUT_MS, problems);
@@ -128,8 +144,8 @@ export function loadProviderConfig(env: Env = process.env): ConfigResult {
       mode,
       apiKey,
       baseUrl: read(env, 'NEBIUS_BASE_URL') ?? DEFAULT_BASE_URL,
-      modelId: modelId ?? 'stub-model',
-      comparisonModelId: read(env, 'SQUAD_SCREEN_COMPARISON_MODEL_ID'),
+      modelId: modelId ?? DEFAULT_MODEL_ID,
+      comparisonModelId: read(env, 'SQUAD_SCREEN_COMPARISON_MODEL_ID') ?? DEFAULT_COMPARISON_MODEL_ID,
       timeoutMs,
       maxRetries,
       priceInputPerMTok,

@@ -22,6 +22,7 @@ function main(): void {
   console.log(`  NEBIUS_BASE_URL       ${config.baseUrl}`);
   console.log(`  model                 ${config.modelId}`);
   console.log(`  comparison model      ${config.comparisonModelId ?? 'unset (EWE-73 comparison unavailable)'}`);
+  console.log(`  rate limits           read from provider response headers at call time`);
   console.log(`  timeout               ${config.timeoutMs} ms`);
   console.log(`  max repair retries    ${config.maxRetries}`);
   console.log(

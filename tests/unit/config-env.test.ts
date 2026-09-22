@@ -10,18 +10,18 @@ import {
 
 const liveEnv = {
   NEBIUS_API_KEY: 'test-key-value',
-  SQUAD_SCREEN_MODEL_ID: 'vendor/model-a',
+  SQUAD_SCREEN_MODEL_ID: 'Qwen/Qwen3-235B-A22B-Instruct-2507',
 };
 
 describe('loadProviderConfig', () => {
-  it('reports missing credentials as actionable problems rather than throwing', () => {
+  it('reports a missing API key as an actionable problem rather than throwing', () => {
     const result = loadProviderConfig({});
     expect(result.ok).toBe(false);
     if (result.ok) return;
 
-    const variables = result.problems.map((problem) => problem.variable);
-    expect(variables).toContain('NEBIUS_API_KEY');
-    expect(variables).toContain('SQUAD_SCREEN_MODEL_ID');
+    // The key is the only variable with no safe default. Model IDs are verified
+    // identifiers rather than secrets, so they default instead of failing.
+    expect(result.problems.map((problem) => problem.variable)).toEqual(['NEBIUS_API_KEY']);
 
     const message = describeConfigProblems(result.problems);
     expect(message).toContain('.env.example');
@@ -43,7 +43,7 @@ describe('loadProviderConfig', () => {
     expect(result.config.baseUrl).toBe(DEFAULT_BASE_URL);
     expect(result.config.timeoutMs).toBe(DEFAULT_TIMEOUT_MS);
     expect(result.config.maxRetries).toBe(DEFAULT_MAX_RETRIES);
-    expect(result.config.modelId).toBe('vendor/model-a');
+    expect(result.config.modelId).toBe('Qwen/Qwen3-235B-A22B-Instruct-2507');
   });
 
   it('leaves the cost basis null when pricing is not supplied', () => {
