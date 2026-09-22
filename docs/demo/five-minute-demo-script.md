@@ -16,9 +16,11 @@
 | **SPECIFIED** | Written down as required behaviour in the technical contract or an issue. **The code does not exist yet, so this is unverified.** |
 | **PENDING** | Depends on an unfinished issue or on credentials nobody has. A placeholder, not a claim. |
 
-**Repository state (VERIFIED, 2026-09-22).** `main` is at `db9a455` and carries EWE-60 and EWE-61 — the app scaffold, the published command set, the server-only configuration loader, the shared Zod contracts and their examples, and a CI workflow. It does **not** yet carry `data/` (EWE-62), the server pipeline (EWE-63–EWE-67), the UI (EWE-68–EWE-70) or `docs/`.
+**Repository state (VERIFIED, 2026-09-22).** `main` is at `b6aeea1` and carries EWE-60 through EWE-63: the app scaffold and published command set, the server-only configuration loader, the shared Zod contracts and examples, CI, the fixture and source packet under `data/`, and the Token Factory adapter. It does **not** yet carry the rest of the server pipeline (EWE-64–EWE-67), the UI (EWE-68–EWE-70) or `docs/`.
 
-So the commands in [`operational-runbook.md`](./operational-runbook.md) are now real, but **every on-screen description below is still SPECIFIED** — derived from the technical contract's UI contract and the deliverables of EWE-68, EWE-69 and EWE-70, not from anything anyone has run.
+`main` has been moving every few minutes. Re-check this paragraph and the ledger in §3 before the packet is assembled; rows here are timestamped by what was on `main` when they were written.
+
+So the commands in [`operational-runbook.md`](./operational-runbook.md) are real and the fixture exists, but **every on-screen description below is still SPECIFIED** — derived from the technical contract's UI contract and the deliverables of EWE-68, EWE-69 and EWE-70, not from anything anyone has run.
 
 ---
 
@@ -49,7 +51,7 @@ The slack is not spare time. It is consumed by the generate call, the re-evaluat
 
 ### 1.3 Latency adjustment rule — decide this in rehearsal, not on stage
 
-Generation latency is **PENDING** — nobody has measured it, because no live call has been made. Measure it three times in rehearsal 1 and take the slowest, then apply:
+Generation latency is **PENDING** — nobody has measured it, because no live call has been made from anywhere in this project. Measure it three times in rehearsal 1 and take the slowest, then apply:
 
 | Slowest observed generation | Action |
 | --- | --- |
@@ -78,7 +80,7 @@ The same rule applies to the re-evaluate call at beat 4, with half the tolerance
 
 > "This is a pre-match briefing for one fixture. The user is a first-team opposition analyst — the person who writes what the coaching staff read. Their hard problem isn't writing it. It's when a squad assumption changes late, and they have to work out which recommendations still stand. I'm generating it now, live."
 
-**Do not say:** the fixture is real club data; any club name; anything about the model yet.
+**Do not say:** that the fixture is real club data. **Both clubs in the packet are fictional** — EWE-62 made them so deliberately, so that synthetic squad records cannot be read as claims about a real person. Do not name a real club, and do not let the fixture name imply one.
 
 **If it fails:** if Generate errors, the error state is itself on-message — say "that's a real provider error, not a canned answer" and retry once. Second failure, go to the backup recording (see [`operational-runbook.md`](./operational-runbook.md) §6).
 
@@ -91,7 +93,7 @@ The same rule applies to the re-evaluate call at beat 4, with half the tolerance
 | Clock | Operator action | On screen |
 | --- | --- | --- |
 | 0:30 | Let it sit. Point, don't click. | At most three cards. Each shows observation / inference / action / trade-off / uncertainty / next check as distinct fields. **SPECIFIED** — technical contract, `Recommendation`. |
-| 0:55 | Point at the constraint on the card carrying `player_actions`. | Planned minutes visible against the staff-supplied 45-minute limit for Player A. **SPECIFIED** — EWE-62 supplies the limit; EWE-65 validates it in code. |
+| 0:55 | Point at the constraint on the card carrying `player_actions`. | Planned minutes visible against the staff-supplied 45-minute limit for Player A. Limit is in the packet (EWE-62) and validated in code (EWE-65). |
 
 **Say (90 words):**
 
@@ -117,7 +119,7 @@ The same rule applies to the re-evaluate call at beat 4, with half the tolerance
 | --- | --- | --- |
 | 1:15 | Click one evidence reference on the card you just discussed. | Drawer opens on that record. **SPECIFIED** — EWE-69. |
 | 1:20 | **Pause 3 s.** Let the room read it. | Exact excerpt or record, source name, URL or record ID, observed / published / retrieved dates, and `data_mode`: synthetic, snapshot or live. **SPECIFIED** — technical contract, `EvidenceItem`. |
-| 1:40 | *Optional, only if the drawer surfaces it:* point at the shared-origin pair. | Two reports sharing one `origin_id`, shown as one piece of corroboration. **SPECIFIED** — EWE-62 ships the pair; EWE-64 deduplicates; EWE-69 displays it. |
+| 1:40 | *Optional, only if the drawer surfaces it:* point at the shared-origin pair. | Two outlets carrying the same agency copy, sharing one `origin_id`, counted once. The pair is in the packet (EWE-62); whether it renders is EWE-64 / EWE-69. |
 
 **Say (78 words):**
 
@@ -125,11 +127,15 @@ The same rule applies to the re-evaluate call at beat 4, with half the tolerance
 >
 > That's the exact excerpt, the source, when it was observed, when we retrieved it, and whether it's synthetic club data, a saved snapshot, or live.
 >
-> These two reports look like corroboration, but they share one original source — so the system counts them once. And where sources disagree, the disagreement stays on the screen. It doesn't get averaged away into a number."
+> These two reports look like corroboration, but they carry the same agency copy — so the system counts them once. And where sources disagree, the disagreement stays on the screen. It doesn't get averaged away into a number."
 
-**Cut first if you are behind:** the shared-origin sentence (the third paragraph's first half). It is the most impressive detail here and the most expendable, because beats 4 and 5 cannot be shortened without losing a required element.
+> **Do not present the public URLs as live links, and do not invite anyone to click one.** EWE-62 records that the illustrative public URLs use the reserved `example.invalid` domain rather than reproducing third-party content. The structure, outlet, dates and excerpt are real in shape and the snapshot is dated — that is what to show. A reviewer who clicks a dead link and then re-reads your provenance claims has been handed a reason to doubt all of them.
 
-**If the drawer does not show shared origin:** drop that sentence entirely rather than describing a feature that is not on the screen. **PENDING EWE-64 / EWE-69** — whether the pair is visible on the demo fixture's chosen recommendation is unverified.
+**The packet contains a genuine unresolved conflict** — an agency report and an older club statement disagree about one player's availability, and no authority rule settles it, so both stay visible. If the drawer surfaces it on the card you chose, that is the strongest ten seconds available in this beat. Confirm in rehearsal 1 which card shows it.
+
+**Cut first if you are behind:** the shared-origin sentence. It is the most impressive detail here and the most expendable, because beats 4 and 5 cannot be shortened without losing a required element.
+
+**If the drawer does not show shared origin:** drop that sentence entirely rather than describing a feature that is not on the screen.
 
 ---
 
@@ -187,7 +193,7 @@ Which branch occurs depends on the live model output and on how EWE-65 and EWE-6
 
 **What the reviewer must take away:** a fair comparison was designed, and either it was measured or it honestly was not.
 
-**Everything in this beat is PENDING [EWE-73](https://linear.app/ewerton-barbosa/issue/EWE-73/eval-run-the-controlled-comparison-and-publish-observed-results) and PENDING CREDENTIALS.** No number exists. `npm run eval` exits 1 by design until EWE-71 lands. The result table lives in `docs/demo/model-comparison.md`, owned by the evaluation slice. **Pick the variant on the morning of the demo, from what that file actually says.**
+**Everything in this beat is PENDING [EWE-73](https://linear.app/ewerton-barbosa/issue/EWE-73/eval-run-the-controlled-comparison-and-publish-observed-results) and PENDING CREDENTIALS.** No number exists. `npm run eval` exits 1 by design until EWE-71 lands. The result table lives in `docs/demo/model-comparison.md`, owned by the evaluation slice, and has not been written anywhere yet. **Pick the variant on the morning of the demo, from what that file actually says.**
 
 | Clock | Operator action | On screen |
 | --- | --- | --- |
@@ -202,6 +208,8 @@ Which branch occurs depends on the live model output and on how EWE-65 and EWE-6
 > That is a small sample and we say so on the slide. Every call and every retry is counted. The cost figure is an estimate of inference only — not what it costs to run this as a product."
 
 Do not editorialise beyond the conclusion written in `model-comparison.md`. A tie or a trade-off is a valid result and should be delivered as one.
+
+**If asked about token counts:** EWE-63 records that the comparison model is a reasoning model which spends most of its completion tokens in a separate field, and that telemetry reads the provider's usage object rather than estimating from response length. Say that if it comes up; do not volunteer a token comparison that has not been run.
 
 #### Variant P — it could not be run
 
@@ -264,7 +272,7 @@ Variant P is a **stronger** 45 seconds than a fabricated table, and it is consis
 >
 > The next step isn't engineering. It's three questions with one analyst, and they're written. What we won't do is put a saved-minutes figure on a slide before anyone has used this."
 
-**Model IDs are PENDING.** Name the actual model only if you can read it off the telemetry from the run you just did. "An approved open-weight model on Token Factory" is accurate and safe; a specific ID that turns out not to be what ran is not. Candidates named in the technical contract are GPT-OSS 20B and 120B, and the contract is explicit that they are candidates, not mandatory choices.
+**Naming the model.** EWE-63 landed with verified defaults — `Qwen3-235B-A22B-Instruct-2507` primary and `gpt-oss-120b` for the comparison. They are identifiers, not secrets. But `.env.example` still says to confirm the exact ID against the event account before the demo, and EWE-63's own record states that **no live call has been made from this project**. So: **name a model on stage only if you can read it off the telemetry of the run you just did.** "An approved open-weight model on Token Factory" is accurate and safe in every other case.
 
 **"Three questions with one analyst, and they're written" is accurate** and is the only claim made about them — §4 of `customer-and-pilot.md` confirms they are written, unauthorised and unsent.
 
@@ -276,27 +284,31 @@ Variant P is a **stronger** 45 seconds than a fabricated table, and it is consis
 
 EWE-75's acceptance criterion is that *every* demo number is sourced to a real run or explicitly labelled illustrative. This table is how that criterion gets checked. Re-walk it after EWE-72 and EWE-73 land, and again after rehearsal 2.
 
+Rows marked *commit record* were read from the landing commit's message and a directory listing, not from the files themselves. That is a weaker basis than reading the code, and it is labelled so nobody treats it as stronger.
+
 | # | Element in the script | Status | What would substantiate it |
 | --- | --- | --- | --- |
 | 1 | Seven beats and their time ranges | **VERIFIED** — fixed by the Linear runbook document | — |
 | 2 | Operator, decision recipient, buyer hypothesis | **VERIFIED** — project record, and `customer-and-pilot.md` §3.1 | — |
-| 3 | 45-minute limit for Player A; supported alternative option | **SPECIFIED** — EWE-62 deliverable | `data/` landing on `main`; it is not there yet |
+| 3 | 45-minute limit for Player A; supported alternative option | **Landed** — `data/demo` and `data/sources` on `main` at `b6aeea1` (*commit record* + listing) | Reading the fixture files, or EWE-72 exercising them |
 | 4 | Every on-screen state in every beat | **SPECIFIED** — technical contract plus EWE-68 / 69 / 70 | EWE-72 running the loop end to end |
 | 5 | Recommendation text read at beat 2 | **PENDING EWE-65** | A live generation |
-| 6 | Evidence excerpt, dates, URL at beat 3 | **PENDING EWE-62 / EWE-64** | The fixture packet landing |
-| 7 | Shared-origin deduplication visible at beat 3 | **PENDING EWE-64 / EWE-69** | Confirming it is visible on the chosen card |
+| 6 | Evidence excerpt, dates, record shown at beat 3 | **Packet landed** (EWE-62). Whether it renders is **PENDING EWE-64 / EWE-69** | The drawer working on the chosen card |
+| 7 | Shared-origin deduplication visible at beat 3 | **Pair exists in the packet** (*commit record*). Visibility **PENDING EWE-64 / EWE-69** | Rehearsal 1, on the chosen card |
 | 8 | Which branch beat 4 takes | **PENDING EWE-66 / EWE-72** | Rehearsal 1 |
 | 9 | Snapshot ID unchanged after the flip | **SPECIFIED** — EWE-66 acceptance criterion | EWE-72 |
 | 10 | Every comparison number at beat 5 | **PENDING EWE-73 and credentials** | `NEBIUS_API_KEY`, `SQUAD_SCREEN_MODEL_ID`, `SQUAD_SCREEN_COMPARISON_MODEL_ID`, then `npm run eval` — which exits 1 until EWE-71 |
-| 11 | Generation and re-evaluation latency | **PENDING** — never measured | Rehearsal 1, timed three times |
+| 11 | Generation and re-evaluation latency | **PENDING** — never measured, no live call has been made | Rehearsal 1, timed three times |
 | 12 | Customer status and pilot measures at beat 6 | **Sourced.** `customer-and-pilot.md` at `b5093cc`, branch `feat/ewe-74-customer-and-pilot` — **not on `main`**. EWE-74 itself is not Done (its §9) | The branches converging; EWE-74 closing |
 | 13 | Whether a target club is named | **PENDING Ewerton** — `customer-and-pilot.md` §8 | The owner's decision, and the event's answer on whether a name is required |
-| 14 | Named model ID at beat 7 | **PENDING credentials** | Reading it off the telemetry of a live run |
-| 15 | Run instructions for the packet | **VERIFIED as published** — README quick start and the command table, `main` at `db9a455` | — |
+| 14 | Named model ID at beat 7 | **Narrowed, not closed.** EWE-63 records verified defaults (*commit record*); `.env.example` still says confirm against the account; no live call has been made | Telemetry from a real run |
+| 15 | Run instructions for the packet | **VERIFIED as published** — README quick start and command table | — |
 | 16 | A deployed working product link | **PENDING** — nothing is deployed anywhere | A deployment, or the packet ships run instructions instead |
 | 17 | Command set and pinned runtime | **VERIFIED as published**, read off `package.json` and the README. **Not executed** by this document's author | Whoever rehearses runs them and records the output |
 | 18 | Credential-check behaviour, and that no command yet makes a live provider call | **VERIFIED** — read from `scripts/check-env.ts` and `src/server/config/env.ts`; `demo:intelligence` exits 1 until EWE-67 | EWE-67 landing |
 | 19 | "No confidence percentages anywhere" (beat 2) | **Landed, not independently read.** EWE-61 commits `986a642` and `a8b74b6` record no confidence field in any schema, a strict synthesis schema, a prose-percentage check and 25 passing tests | Reading `src/domain/contracts.ts`, or EWE-72 confirming none renders |
+| 20 | Public source URLs shown at beat 3 | **Illustrative.** EWE-62 records that they use the reserved `example.invalid` domain rather than reproducing third-party content | Nothing — this is a property of the packet. Handle it by not presenting them as live links |
+| 21 | Both clubs are fictional | **Landed** — EWE-62 (*commit record*), deliberate so synthetic records cannot be read as claims about a real person | — |
 
 No screenshot, recording, transcript or measured value is attached to this document, because none exists.
 
