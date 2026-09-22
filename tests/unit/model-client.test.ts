@@ -4,7 +4,14 @@ import { ModelSynthesisSchema } from '@/domain/contracts';
 import { DEFAULT_COMPARISON_MODEL_ID, DEFAULT_MODEL_ID, loadProviderConfig } from '@/server/config/env';
 import { ModelClient, toStrictJsonSchema } from '@/server/models/client';
 import { ProviderError } from '@/server/models/errors';
-import { estimateCost, readRateLimit, readUsage, sumUsage, USAGE_UNAVAILABLE } from '@/server/models/telemetry';
+import {
+  estimateCost,
+  parseDurationSeconds,
+  readRateLimit,
+  readUsage,
+  sumUsage,
+  USAGE_UNAVAILABLE,
+} from '@/server/models/telemetry';
 
 const stubConfig = {
   mode: 'stub' as const,
@@ -227,14 +234,20 @@ describe('cost estimation', () => {
 
 describe('rate limits', () => {
   it('reads limits from response headers rather than hard-coding them', () => {
+    // Shaped like a real response: counts are bare integers, resets are Go-style
+    // duration strings. An earlier version parsed both with Number() and threw
+    // the reset values away as NaN.
     const headers = new Headers({
       'x-ratelimit-remaining-requests': '599',
       'x-ratelimit-remaining-tokens': '399000',
+      'x-ratelimit-reset-requests': '1s',
+      'x-ratelimit-reset-tokens': '1s',
     });
     expect(readRateLimit(headers)).toEqual({
       requestsRemaining: 599,
       tokensRemaining: 399_000,
-      resetSeconds: null,
+      resetRequestsSeconds: 1,
+      resetTokensSeconds: 1,
     });
   });
 
@@ -242,7 +255,40 @@ describe('rate limits', () => {
     expect(readRateLimit(undefined)).toEqual({
       requestsRemaining: null,
       tokensRemaining: null,
-      resetSeconds: null,
+      resetRequestsSeconds: null,
+      resetTokensSeconds: null,
     });
+  });
+
+  it('distinguishes an absent header from an unparseable one', () => {
+    const unparseable = new Headers({ 'x-ratelimit-reset-requests': 'soon' });
+    expect(readRateLimit(unparseable).resetRequestsSeconds).toBeNull();
+    expect(readRateLimit(new Headers()).resetRequestsSeconds).toBeNull();
+  });
+});
+
+describe('duration parsing', () => {
+  it('reads the suffixed forms the provider actually sends', () => {
+    expect(parseDurationSeconds('1s')).toBe(1);
+    expect(parseDurationSeconds('500ms')).toBeCloseTo(0.5, 6);
+    expect(parseDurationSeconds('2m')).toBe(120);
+    expect(parseDurationSeconds('1h')).toBe(3600);
+  });
+
+  it('sums compound durations', () => {
+    expect(parseDurationSeconds('1m30s')).toBe(90);
+    expect(parseDurationSeconds('1h0m5s')).toBe(3605);
+  });
+
+  it('accepts a bare number as seconds', () => {
+    expect(parseDurationSeconds('30')).toBe(30);
+    expect(parseDurationSeconds('1.5')).toBe(1.5);
+  });
+
+  it('returns null rather than a guess for input it cannot read', () => {
+    expect(parseDurationSeconds('soon')).toBeNull();
+    expect(parseDurationSeconds('')).toBeNull();
+    expect(parseDurationSeconds(null)).toBeNull();
+    expect(parseDurationSeconds(undefined)).toBeNull();
   });
 });
