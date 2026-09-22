@@ -40,8 +40,18 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Unit and integration tests
+      - name: Unit, integration and evaluation tests
         run: npm test
+
+      - name: Headless product loop
+        run: npm run demo:intelligence -- --stub
+
+      # The harness tests check the harness's own logic. This runs it end to end
+      # against the pipeline, which is what breaks if the two drift apart. With
+      # no credential it exercises the recorded path only, so it cannot and does
+      # not produce a measured comparison.
+      - name: Evaluation harness
+        run: npm run eval
 
       - name: Build
         run: npm run build
