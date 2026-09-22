@@ -31,9 +31,23 @@ export interface ReevaluateInput {
   readonly scenarioRunId: string;
   readonly overrides: readonly AvailabilityOverride[];
   readonly client: ModelClient;
+  /** Held fixed by the evaluation harness so a comparison isolates model choice. */
+  readonly prompt?: { readonly text: string; readonly version: string };
+  /**
+   * The model under test. Must be threaded through: a comparison that generated
+   * with one model and re-evaluated with another would attribute the scenario
+   * result to the wrong one.
+   */
+  readonly modelId?: string;
 }
 
-export async function reevaluate(input: ReevaluateInput): Promise<ScenarioResult> {
+export interface ReevaluateOutput {
+  readonly result: ScenarioResult;
+  /** What the model returned, before the change classification ran. */
+  readonly rawModelOutput: unknown;
+}
+
+export async function reevaluate(input: ReevaluateInput): Promise<ReevaluateOutput> {
   const overlay = applyAvailabilityOverlay(input.baseContext, input.overrides, {
     scenarioId: input.scenarioId,
     parentRunId: input.baseRunId,
@@ -44,6 +58,8 @@ export async function reevaluate(input: ReevaluateInput): Promise<ScenarioResult
     client: input.client,
     runId: input.scenarioRunId,
     priorRecommendations: input.baseRecommendations,
+    ...(input.prompt === undefined ? {} : { prompt: input.prompt }),
+    ...(input.modelId === undefined ? {} : { modelId: input.modelId }),
   });
 
   const { changes, withdrawn } = classifyChanges({
@@ -65,17 +81,20 @@ export async function reevaluate(input: ReevaluateInput): Promise<ScenarioResult
   }
 
   return {
-    run_id: input.scenarioRunId,
-    parent_run_id: input.baseRunId,
-    scenario_id: input.scenarioId,
-    evidence_snapshot_id: overlay.context.evidence_snapshot_id,
-    applied_assumptions: [...overlay.assumptions],
-    recommendations: [...synthesis.recommendations],
-    changes: [...changes],
-    withdrawn_recommendations: [...withdrawn],
-    evidence: [...overlay.context.evidence],
-    abstention_note: synthesis.abstentionNote,
-    warnings,
-    telemetry: synthesis.telemetry,
+    result: {
+      run_id: input.scenarioRunId,
+      parent_run_id: input.baseRunId,
+      scenario_id: input.scenarioId,
+      evidence_snapshot_id: overlay.context.evidence_snapshot_id,
+      applied_assumptions: [...overlay.assumptions],
+      recommendations: [...synthesis.recommendations],
+      changes: [...changes],
+      withdrawn_recommendations: [...withdrawn],
+      evidence: [...overlay.context.evidence],
+      abstention_note: synthesis.abstentionNote,
+      warnings,
+      telemetry: synthesis.telemetry,
+    },
+    rawModelOutput: synthesis.rawModelOutput,
   };
 }
