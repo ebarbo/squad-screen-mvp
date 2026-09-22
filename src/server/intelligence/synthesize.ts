@@ -30,6 +30,15 @@ export interface SynthesisInput {
   readonly runId: string;
   readonly priorRecommendations?: readonly Recommendation[];
   readonly modelId?: string;
+  /**
+   * Overrides the prompt this module would build.
+   *
+   * The evaluation harness renders its own prompt and holds it fixed across
+   * models, which is the only way its comparison isolates model choice from
+   * prompt wording. Everything downstream — validation, constraint enforcement,
+   * telemetry — is unchanged, so the harness still measures the shipping path.
+   */
+  readonly prompt?: { readonly text: string; readonly version: string };
 }
 
 export interface SynthesisResult {
@@ -37,6 +46,8 @@ export interface SynthesisResult {
   readonly abstentionNote: string | null;
   readonly warnings: readonly Warning[];
   readonly telemetry: Telemetry;
+  /** What the model returned, before this module assembled a result from it. */
+  readonly rawModelOutput: unknown;
 }
 
 /**
@@ -75,8 +86,9 @@ export async function synthesize(input: SynthesisInput): Promise<SynthesisResult
     schema: ModelSynthesisSchema,
     schemaName: 'squad_screen_synthesis',
     systemPrompt: SYNTHESIS_SYSTEM_PROMPT,
-    userPrompt: buildSynthesisPrompt({ context, priorRecommendations: input.priorRecommendations }),
-    promptVersion: PROMPT_VERSION,
+    userPrompt:
+      input.prompt?.text ?? buildSynthesisPrompt({ context, priorRecommendations: input.priorRecommendations }),
+    promptVersion: input.prompt?.version ?? PROMPT_VERSION,
     modelId: input.modelId,
     stubResponse: () => synthesizeOffline(context),
   });
@@ -175,5 +187,6 @@ export async function synthesize(input: SynthesisInput): Promise<SynthesisResult
     abstentionNote,
     warnings,
     telemetry: response.telemetry,
+    rawModelOutput: response.value,
   };
 }
