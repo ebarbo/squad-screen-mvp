@@ -15,7 +15,13 @@ export const DEFAULT_TIMEOUT_MS = 30_000;
 export const DEFAULT_MAX_RETRIES = 2;
 
 /**
- * Verified available in the event account against the base URL above.
+ * Confirmed reachable with the supplied API key against the base URL above.
+ *
+ * Two things that call is *not* evidence of, and which should not be claimed:
+ * that the key belongs to the hackathon event account, and that an organiser
+ * approved these models. The API exposes no tenant identity endpoint, so the
+ * account question is currently unverifiable from our side and is pending
+ * confirmation in the Nebius console.
  *
  * These are identifiers, not secrets, so they are defaulted rather than
  * required: hard-failing on a missing model ID buys nothing when a known-good
@@ -109,6 +115,10 @@ function resolveMode(env: Env, problems: ConfigProblem[]): ModelMode {
  * project contract. In `stub` mode nothing is required, but the transport
  * labels every response it produces so it cannot be mistaken for live
  * inference.
+ *
+ * This resolves configuration only and performs no network call, so a
+ * successful result means "usable-looking", not "reachable".
+ * `npm run demo:intelligence` is what actually proves the provider answers.
  */
 export function loadProviderConfig(env: Env = process.env): ConfigResult {
   const problems: ConfigProblem[] = [];
@@ -124,7 +134,7 @@ export function loadProviderConfig(env: Env = process.env): ConfigResult {
     problems.push({
       variable: 'NEBIUS_API_KEY',
       message:
-        'Not set. Add the Nebius Token Factory API key for the event account to .env.local, ' +
+        'Not set. Add the Nebius Token Factory API key to .env.local, ' +
         'or set SQUAD_SCREEN_MODEL_MODE=stub to run offline with a labeled stub transport.',
     });
   }
