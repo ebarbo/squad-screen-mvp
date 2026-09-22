@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      # CI has no provider credentials and must never acquire them implicitly.
+      # The stub transport is explicit and labels everything it returns.
+      SQUAD_SCREEN_MODEL_MODE: stub
+      SQUAD_SCREEN_MODEL_ID: stub-model
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Assert installed versions match the pinned manifest
+        run: node scripts/assert-pinned-deps.mjs
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit and integration tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Assert no credentials in the client bundle
+        run: node scripts/assert-no-secrets-in-bundle.mjs
