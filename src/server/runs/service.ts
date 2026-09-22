@@ -125,7 +125,7 @@ export async function reevaluateRun(options: ReevaluateOptions): Promise<Scenari
   const client = options.client ?? ModelClient.create();
 
   try {
-    const result = await reevaluate({
+    const { result } = await reevaluate({
       baseContext: base.context,
       baseRunId: base.runId,
       baseRecommendations: base.recommendations,
