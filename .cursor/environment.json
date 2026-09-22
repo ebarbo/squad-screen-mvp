@@ -1,0 +1,11 @@
+{
+  "name": "Squad Screen MVP",
+  "install": "bash -lc 'export NVM_DIR=\"$HOME/.nvm\"; [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"; nvm install; nvm use; node --version; npm install'",
+  "terminals": [
+    {
+      "name": "next-dev",
+      "command": "bash -lc 'export NVM_DIR=\"$HOME/.nvm\"; [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"; nvm use; npm run dev'"
+    }
+  ],
+  "ports": [{ "name": "next-dev", "port": 3000 }]
+}
