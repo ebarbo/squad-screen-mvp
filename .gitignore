@@ -1,9 +1,21 @@
 node_modules/
+
+# The lockfile is generated locally and not committed: this repository is pushed
+# through an API path with a payload budget that a 200 KB lockfile does not fit.
+# Every direct dependency in package.json is pinned to an exact version instead,
+# .npmrc sets save-exact, and CI asserts the installed tree matches the manifest
+# (scripts/assert-pinned-deps.mjs).
+package-lock.json
+
 .next/
+out/
 dist/
 coverage/
 *.log
 .env
 .env.local
+.env*.local
 .DS_Store
+next-env.d.ts
+tsconfig.tsbuildinfo
 evals/results/*.local.json
