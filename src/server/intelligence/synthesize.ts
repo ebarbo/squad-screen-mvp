@@ -93,32 +93,38 @@ export async function synthesize(input: SynthesisInput): Promise<SynthesisResult
 
   const proposed = response.value.recommendations.map((proposal, index) => toRecommendation(proposal, runId, index));
 
+  const rejected = new Set<string>();
+
   // --- Check 1: every citation resolves, and every reference is real. --------
+  // Checked one recommendation at a time so a failure is attributable to the
+  // advice that carried it. IDs are server-assigned by index here, so narrowing
+  // the scope loses no cross-set duplicate case.
   const priorIds = input.priorRecommendations?.map((recommendation) => recommendation.id);
-  const integrityProblems = checkReferentialIntegrity({
-    recommendations: proposed,
-    evidence: context.evidence,
-    players: context.own_team.players,
-    constraints: context.constraints,
-    ...(priorIds === undefined ? {} : { priorRecommendationIds: priorIds }),
-  });
+
+  for (const recommendation of proposed) {
+    const problems = checkReferentialIntegrity({
+      recommendations: [recommendation],
+      evidence: context.evidence,
+      players: context.own_team.players,
+      constraints: context.constraints,
+      ...(priorIds === undefined ? {} : { priorRecommendationIds: priorIds }),
+    });
+
+    for (const problem of problems) {
+      rejected.add(recommendation.id);
+      warnings.push({
+        code: 'missing_evidence',
+        message: `Recommendation withheld: ${problem.message}`,
+        related_ids: [problem.reference],
+      });
+    }
+  }
 
   // --- Check 2: constraints the staff supplied, enforced in code. -----------
   const violations = findConstraintViolations(proposed, context.own_team.players);
 
   // --- Check 3: no confidence figure, as a field or buried in prose. --------
   const fabricated = findFabricatedConfidence(proposed);
-
-  const rejected = new Set<string>();
-
-  for (const problem of integrityProblems) {
-    rejected.add(problem.recommendation_id);
-    warnings.push({
-      code: 'missing_evidence',
-      message: `Recommendation withheld: ${problem.message}`,
-      related_ids: [problem.reference],
-    });
-  }
 
   for (const violation of violations) {
     rejected.add(violation.recommendation_id);
