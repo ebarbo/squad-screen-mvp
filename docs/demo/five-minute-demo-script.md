@@ -16,7 +16,9 @@
 | **SPECIFIED** | Written down as required behaviour in the technical contract or an issue. **The code does not exist yet, so this is unverified.** |
 | **PENDING** | Depends on an unfinished issue or on credentials nobody has. A placeholder, not a claim. |
 
-**Repository state when this was written (VERIFIED).** `main` was at commit `2674040` and contained one file, `.gitignore`. No application, no fixture, no UI, no commands. Every on-screen description below is therefore SPECIFIED, derived from the technical contract's UI contract and the deliverables of EWE-68, EWE-69 and EWE-70 — not from anything anyone has run.
+**Repository state (VERIFIED, 2026-09-22).** `main` is at `db9a455` and carries EWE-60 and EWE-61 — the app scaffold, the published command set, the server-only configuration loader, the shared Zod contracts and their examples, and a CI workflow. It does **not** yet carry `data/` (EWE-62), the server pipeline (EWE-63–EWE-67), the UI (EWE-68–EWE-70) or `docs/`.
+
+So the commands in [`operational-runbook.md`](./operational-runbook.md) are now real, but **every on-screen description below is still SPECIFIED** — derived from the technical contract's UI contract and the deliverables of EWE-68, EWE-69 and EWE-70, not from anything anyone has run.
 
 ---
 
@@ -47,7 +49,7 @@ The slack is not spare time. It is consumed by the generate call, the re-evaluat
 
 ### 1.3 Latency adjustment rule — decide this in rehearsal, not on stage
 
-Generation latency is **PENDING** — nobody has measured it, because no live call has been made ([EWE-63](https://linear.app/ewerton-barbosa/issue/EWE-63/ai-wire-token-factory-with-structured-output-and-telemetry) acceptance is still open on credentials). Measure it three times in rehearsal 1 and take the slowest, then apply:
+Generation latency is **PENDING** — nobody has measured it, because no live call has been made. Measure it three times in rehearsal 1 and take the slowest, then apply:
 
 | Slowest observed generation | Action |
 | --- | --- |
@@ -185,7 +187,7 @@ Which branch occurs depends on the live model output and on how EWE-65 and EWE-6
 
 **What the reviewer must take away:** a fair comparison was designed, and either it was measured or it honestly was not.
 
-**Everything in this beat is PENDING [EWE-73](https://linear.app/ewerton-barbosa/issue/EWE-73/eval-run-the-controlled-comparison-and-publish-observed-results) and PENDING CREDENTIALS.** No number exists. The result table lives in `docs/demo/model-comparison.md`, owned by the evaluation slice, and is `Pending (not measured)` at the time of writing. **Pick the variant on the morning of the demo, from what that file actually says.**
+**Everything in this beat is PENDING [EWE-73](https://linear.app/ewerton-barbosa/issue/EWE-73/eval-run-the-controlled-comparison-and-publish-observed-results) and PENDING CREDENTIALS.** No number exists. `npm run eval` exits 1 by design until EWE-71 lands. The result table lives in `docs/demo/model-comparison.md`, owned by the evaluation slice. **Pick the variant on the morning of the demo, from what that file actually says.**
 
 | Clock | Operator action | On screen |
 | --- | --- | --- |
@@ -219,25 +221,27 @@ Variant P is a **stronger** 45 seconds than a fabricated table, and it is consis
 
 **What the reviewer must take away:** we know exactly who this is for, we do not pretend to have them, and we have specified how we would find out.
 
-**Source and status.** The wording below is trimmed from §7 of the EWE-74 working document, which is written for this slot. **PENDING [EWE-74](https://linear.app/ewerton-barbosa/issue/EWE-74/product-establish-named-customer-problem-evidence-and-four-fixture)** — that issue is not Done and `docs/demo/customer-and-pilot.md` does not exist in this repository yet. Re-verify this beat against that file once it lands; if the owner names a target before the demo, the first sentence changes and nothing else does.
+**Source.** `docs/demo/customer-and-pilot.md`, at `b5093cc` on branch `feat/ewe-74-customer-and-pilot`. **It is not on `main`** — `docs/` does not exist on `main` at all — so the relative links between that file and this one do not resolve until the two branches converge. Read it on its branch, not through a link from here.
 
-The original §7 draft runs about 165 words — roughly 71 seconds at presenting pace, which does not fit a 45-second slot. It is trimmed below to 93 words, and its closing sentence about saved-minutes figures has been moved to beat 7, where it lands better as the last thing the room hears.
+**No reconciliation is needed.** Its §7 records that this script's trimmed 93-word version is authoritative for what gets delivered, and that its own longer text is the source kept for auditing the claims against its §1 and §6. **Deliver the version below, and do not re-expand it** — the source text runs about 165 words, which is roughly 71 seconds against a 45-second slot. Its closing sentence about saved-minutes figures has been moved to beat 7, where it lands better as the last thing the room hears.
+
+**Still PENDING**, and the file says so itself: [EWE-74](https://linear.app/ewerton-barbosa/issue/EWE-74/product-establish-named-customer-problem-evidence-and-four-fixture) is not Done — its §9 records that two of its four acceptance criteria are met only in the weaker of the two available forms — and whether a club is named at all is **PENDING Ewerton** (§8).
 
 | Clock | Operator action | On screen |
 | --- | --- | --- |
-| 3:30 | Switch to the customer slide. | Target profile, relationship status stated plainly, four-fixture pilot measures. **PENDING EWE-74.** |
+| 3:30 | Switch to the customer slide. | Target profile, relationship status stated plainly, four-fixture pilot measures. Slide **PENDING**. |
 
 **Say (93 words):**
 
 > "We don't have a customer. We have a specific person we built this for: the opposition analyst at a professional first team.
 >
-> The decision is narrow. They draft the briefing, something changes, and they have to work out what still stands. That's the bet.
+> The decision is narrow. They draft the briefing, something changes, and they work out what still stands. That's the bet.
 >
 > To test it we've specified a four-fixture pilot — two fixtures measuring their current process, two with the tool. We measure briefing time, revision time, fact-checking effort, and what they accept, amend or reject. Every one of those numbers is blank right now, because nobody has run it."
 
-**Forbidden in this beat**, per §6 of the EWE-74 document and the acceptance criteria of both issues: naming any club as a customer, partner or interested party · any quote attributed to an analyst or coach · any time saving in minutes, hours or percent, *including "could save"* · any claim about match results, points or injuries · any revenue, market size or price validation · implying the pilot has been agreed or begun.
+**Forbidden in this beat**, per §6 of `customer-and-pilot.md` and the acceptance criteria of both issues: naming any club as a customer, partner or interested party · any quote attributed to an analyst or coach · any time saving in minutes, hours or percent, *including "could save"* · any claim about match results, points or injuries · any revenue, market size or price validation · implying the pilot has been agreed or begun.
 
-**If the owner names a target before the demo:** the honest first sentence becomes "Our target is ⟨name⟩, and the relationship is ⟨label⟩ — ⟨what that label actually means⟩." Use the exact label from the EWE-74 document's ladder: *target*, *interviewed user*, *pilot partner* or *paying customer*. Do not round it up.
+**If the owner names a target before the demo:** the honest first sentence becomes "Our target is ⟨name⟩, and the relationship is ⟨label⟩ — ⟨what that label actually means⟩." Use the exact label from the ladder in §1 of that file: *target*, *interviewed user*, *pilot partner* or *paying customer*. Do not round it up. Nothing else in the beat changes.
 
 ---
 
@@ -262,30 +266,37 @@ The original §7 draft runs about 165 words — roughly 71 seconds at presenting
 
 **Model IDs are PENDING.** Name the actual model only if you can read it off the telemetry from the run you just did. "An approved open-weight model on Token Factory" is accurate and safe; a specific ID that turns out not to be what ran is not. Candidates named in the technical contract are GPT-OSS 20B and 120B, and the contract is explicit that they are candidates, not mandatory choices.
 
+**"Three questions with one analyst, and they're written" is accurate** and is the only claim made about them — §4 of `customer-and-pilot.md` confirms they are written, unauthorised and unsent.
+
 **Do not say:** that open weights give permission to process club data. They do not, and a reviewer from the football side will know it.
 
 ---
 
 ## 3. Substantiation ledger
 
-EWE-75's acceptance criterion is that *every* demo number is sourced to a real run or explicitly labelled illustrative. This table is how that criterion gets checked. It must be re-walked after EWE-72, EWE-73 and EWE-74 land, and again after rehearsal 2.
+EWE-75's acceptance criterion is that *every* demo number is sourced to a real run or explicitly labelled illustrative. This table is how that criterion gets checked. Re-walk it after EWE-72 and EWE-73 land, and again after rehearsal 2.
 
-| # | Element in the script | Status today | What would substantiate it |
+| # | Element in the script | Status | What would substantiate it |
 | --- | --- | --- | --- |
 | 1 | Seven beats and their time ranges | **VERIFIED** — fixed by the Linear runbook document | — |
-| 2 | Operator, decision recipient, buyer hypothesis | **VERIFIED** — stated in the project record and in all three Linear documents | — |
-| 3 | 45-minute limit for Player A; supported alternative option | **SPECIFIED** — EWE-62 deliverable | `data/demo/**` landing on `main` |
-| 4 | Every on-screen state in every beat | **SPECIFIED** — technical contract plus EWE-68 / 69 / 70 deliverables | EWE-72 running the loop end to end |
+| 2 | Operator, decision recipient, buyer hypothesis | **VERIFIED** — project record, and `customer-and-pilot.md` §3.1 | — |
+| 3 | 45-minute limit for Player A; supported alternative option | **SPECIFIED** — EWE-62 deliverable | `data/` landing on `main`; it is not there yet |
+| 4 | Every on-screen state in every beat | **SPECIFIED** — technical contract plus EWE-68 / 69 / 70 | EWE-72 running the loop end to end |
 | 5 | Recommendation text read at beat 2 | **PENDING EWE-65** | A live generation |
 | 6 | Evidence excerpt, dates, URL at beat 3 | **PENDING EWE-62 / EWE-64** | The fixture packet landing |
 | 7 | Shared-origin deduplication visible at beat 3 | **PENDING EWE-64 / EWE-69** | Confirming it is visible on the chosen card |
 | 8 | Which branch beat 4 takes | **PENDING EWE-66 / EWE-72** | Rehearsal 1 |
-| 9 | Snapshot ID unchanged after the flip | **SPECIFIED** — EWE-66 acceptance criterion and an integration test | EWE-72 |
-| 10 | Every comparison number | **PENDING EWE-73 and credentials** | `NEBIUS_API_KEY`, `SQUAD_SCREEN_MODEL_ID`, `SQUAD_SCREEN_COMPARISON_MODEL_ID`, then the eval run |
+| 9 | Snapshot ID unchanged after the flip | **SPECIFIED** — EWE-66 acceptance criterion | EWE-72 |
+| 10 | Every comparison number at beat 5 | **PENDING EWE-73 and credentials** | `NEBIUS_API_KEY`, `SQUAD_SCREEN_MODEL_ID`, `SQUAD_SCREEN_COMPARISON_MODEL_ID`, then `npm run eval` — which exits 1 until EWE-71 |
 | 11 | Generation and re-evaluation latency | **PENDING** — never measured | Rehearsal 1, timed three times |
-| 12 | Customer status and pilot measures | **PENDING EWE-74** | `docs/demo/customer-and-pilot.md` landing |
-| 13 | Named model ID at beat 7 | **PENDING credentials** | Reading it off the telemetry of the live run |
-| 14 | Working product link | **PENDING** | Deployment or reproducible local instructions from EWE-60 |
+| 12 | Customer status and pilot measures at beat 6 | **Sourced.** `customer-and-pilot.md` at `b5093cc`, branch `feat/ewe-74-customer-and-pilot` — **not on `main`**. EWE-74 itself is not Done (its §9) | The branches converging; EWE-74 closing |
+| 13 | Whether a target club is named | **PENDING Ewerton** — `customer-and-pilot.md` §8 | The owner's decision, and the event's answer on whether a name is required |
+| 14 | Named model ID at beat 7 | **PENDING credentials** | Reading it off the telemetry of a live run |
+| 15 | Run instructions for the packet | **VERIFIED as published** — README quick start and the command table, `main` at `db9a455` | — |
+| 16 | A deployed working product link | **PENDING** — nothing is deployed anywhere | A deployment, or the packet ships run instructions instead |
+| 17 | Command set and pinned runtime | **VERIFIED as published**, read off `package.json` and the README. **Not executed** by this document's author | Whoever rehearses runs them and records the output |
+| 18 | Credential-check behaviour, and that no command yet makes a live provider call | **VERIFIED** — read from `scripts/check-env.ts` and `src/server/config/env.ts`; `demo:intelligence` exits 1 until EWE-67 | EWE-67 landing |
+| 19 | "No confidence percentages anywhere" (beat 2) | **Landed, not independently read.** EWE-61 commits `986a642` and `a8b74b6` record no confidence field in any schema, a strict synthesis schema, a prose-percentage check and 25 passing tests | Reading `src/domain/contracts.ts`, or EWE-72 confirming none renders |
 
 No screenshot, recording, transcript or measured value is attached to this document, because none exists.
 
@@ -296,7 +307,7 @@ No screenshot, recording, transcript or measured value is attached to this docum
 | # | Decision | Who | Deadline |
 | --- | --- | --- | --- |
 | 1 | Provider credentials, or accept beat 5 Variant P | Ewerton | Before rehearsal 1 |
-| 2 | Whether a target club is named for beat 6 | Ewerton, via EWE-74 §8 | Before rehearsal 2 |
+| 2 | Whether a target club is named for beat 6 | Ewerton, via `customer-and-pilot.md` §8 | Before rehearsal 2 |
 | 3 | Beat 4 branch, pinned from the observed run | Presenter, in rehearsal 1 | Before rehearsal 2 |
 | 4 | Whether a working product link exists or the packet ships run instructions | Ewerton | 15:00 packet deadline |
 | 5 | Who presents | Ewerton | Before rehearsal 1 |
