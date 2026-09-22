@@ -160,20 +160,70 @@ export function buildTelemetry(input: BuildTelemetryInput): Telemetry {
 export interface RateLimitSnapshot {
   readonly requestsRemaining: number | null;
   readonly tokensRemaining: number | null;
-  readonly resetSeconds: number | null;
+  /** Seconds until the request quota resets. */
+  readonly resetRequestsSeconds: number | null;
+  /** Seconds until the token quota resets. */
+  readonly resetTokensSeconds: number | null;
+}
+
+const DURATION_UNIT_SECONDS: Record<string, number> = {
+  ns: 1e-9,
+  us: 1e-6,
+  'µs': 1e-6,
+  ms: 1e-3,
+  s: 1,
+  m: 60,
+  h: 3600,
+};
+
+/**
+ * Parse a duration in seconds.
+ *
+ * The reset headers carry Go-style duration strings — `"1s"`, `"500ms"`,
+ * `"1m30s"` — not bare numbers, so `Number()` yields NaN and silently discards a
+ * value the provider did report. Treating an observed value as unobserved is the
+ * same class of error as inventing one, just in the other direction.
+ *
+ * A bare number is accepted and read as seconds, since not every provider uses
+ * the suffixed form.
+ */
+export function parseDurationSeconds(raw: string | null | undefined): number | null {
+  if (raw === null || raw === undefined) return null;
+
+  const text = raw.trim();
+  if (text.length === 0) return null;
+
+  const bare = Number(text);
+  if (Number.isFinite(bare)) return bare;
+
+  const matches = [...text.matchAll(/(\d+(?:\.\d+)?)(ns|us|µs|ms|s|m|h)/g)];
+  if (matches.length === 0) return null;
+
+  let seconds = 0;
+  for (const match of matches) {
+    const amount = Number(match[1]);
+    const unit = DURATION_UNIT_SECONDS[match[2]!];
+    if (!Number.isFinite(amount) || unit === undefined) return null;
+    seconds += amount * unit;
+  }
+
+  return seconds;
 }
 
 export function readRateLimit(headers: Headers | undefined): RateLimitSnapshot {
-  const num = (name: string): number | null => {
+  const count = (name: string): number | null => {
     const raw = headers?.get(name);
     if (raw === null || raw === undefined) return null;
     const parsed = Number(raw);
     return Number.isFinite(parsed) ? parsed : null;
   };
 
+  const duration = (name: string): number | null => parseDurationSeconds(headers?.get(name));
+
   return {
-    requestsRemaining: num('x-ratelimit-remaining-requests'),
-    tokensRemaining: num('x-ratelimit-remaining-tokens'),
-    resetSeconds: num('x-ratelimit-reset-requests'),
+    requestsRemaining: count('x-ratelimit-remaining-requests'),
+    tokensRemaining: count('x-ratelimit-remaining-tokens'),
+    resetRequestsSeconds: duration('x-ratelimit-reset-requests'),
+    resetTokensSeconds: duration('x-ratelimit-reset-tokens'),
   };
 }
