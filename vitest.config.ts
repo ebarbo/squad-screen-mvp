@@ -35,6 +35,21 @@ export default defineConfig({
           setupFiles: ['tests/setup-dom.ts'],
         },
       },
+      {
+        // The evaluation harness keeps its tests beside its code rather than in
+        // tests/. Mirrors evals/vitest.config.ts deliberately, including the
+        // absence of a setup file: those tests were written to run in a bare
+        // environment, and imposing the stub-mode setup here would change the
+        // transport they resolve.
+        resolve: { alias },
+        esbuild: jsx,
+        test: {
+          name: 'evals',
+          globals: true,
+          environment: 'node',
+          include: ['evals/**/*.test.ts'],
+        },
+      },
     ],
   },
 });
