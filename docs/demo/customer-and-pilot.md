@@ -24,13 +24,13 @@ Same three tags used across `docs/demo/`.
 
 ## 1. Customer status
 
-> ### Relationship status: none. Target profile only. **VERIFIED**
+> ### Relationship status: provisional named target — PSV (may change). **VERIFIED** (owner 2026-09-23; not a deal or outreach auth)
 
-EWE-74 offers four labels — *target*, *interviewed user*, *pilot partner*, *paying customer*. None applies. All four presuppose a specific named organisation, and none has been named or approached.
+EWE-74 offers four labels — *target*, *interviewed user*, *pilot partner*, *paying customer*. Organisation provisionally named **PSV**; honest label is **target (provisional / assumed)**. Not contacted, interviewed, or signed.
 
 | Claim | Status | Basis |
 | --- | --- | --- |
-| A specific club or analyst is our target | **PENDING** | No organisation selected. §2 is the rubric; the owner decides. |
+| A specific club or analyst is our target | **Provisional — PSV** | Owner selected PSV 2026-09-23. May change. Not contacted. |
 | Someone has been interviewed | **No** — VERIFIED | Zero conversations have taken place. |
 | A pilot partner exists | **No** — VERIFIED | No agreement, verbal or written. |
 | A paying customer exists | **No** — VERIFIED | No commercial discussion has occurred. |
@@ -55,11 +55,11 @@ The third and fourth qualifying criteria cannot be checked from outside — they
 **Segment shape (hypothesis, not a shortlist).** Professional first teams large enough to employ an analyst, small enough that the analyst is one person doing the whole briefing by hand. This is a reasoned guess about where the problem is sharpest. It is not market research, it is not sized, and it must be labelled as a hypothesis in any pitch.
 
 ```
-Target organisation:      ______________________
+Target organisation:      PSV  (provisional; may change)
 Named individual:         ______________________  Role: __________________
 Route of introduction:    ______________________
-Relationship label today: none / target / interviewed user / pilot partner / paying customer
-Date label last changed:  ______________________
+Relationship label today: target (provisional / assumed) / interviewed user / pilot partner / paying customer
+Date label last changed:  2026-09-23
 ```
 
 ---
@@ -69,7 +69,7 @@ Date label last changed:  ______________________
 ### 3.1 The people
 
 | Role | Who | In this workflow | Status |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | **Operator** | First-team opposition / performance analyst | Builds the briefing; the person who would open the product | **VERIFIED** — stated in the project record and all three Linear documents |
 | **Decision recipient** | Coaching staff | Receive the briefing, decide the game plan, never open the product | **VERIFIED** — same |
 | **Buyer** | Sporting or performance director | Holds budget and signs | **Hypothesis.** Unconfirmed. Could be the head coach, head of analysis, or central IT. |
@@ -141,7 +141,7 @@ One analyst at one club, four consecutive fixtures at their own cadence. **Fixtu
 ### 5.2 What gets measured
 
 | ID | Measure | Definition | Type |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | M1 | Preparation time | Minutes from starting opposition work to sending the first complete briefing. Interruptions excluded and logged. | Measured |
 | M2 | Revision time | Minutes from learning of an availability change to sending the revised version. May be none in a given fixture. | Measured |
 | M3 | Fact-check effort | Claims independently verified · minutes spent · corrections made | Measured |
@@ -206,7 +206,7 @@ EWE-74's fourth acceptance criterion — *"No unsupported customer relationship,
 
 **Forbidden, because nothing supports them:**
 
-- Naming any club as a customer, partner, pilot participant or interested party.
+- Naming any club as a **customer, partner, pilot participant or interested party** (provisional *target* PSV wording is allowed; do not upgrade the label).
 - Any quote, paraphrase or anecdote attributed to an analyst or coach.
 - Any time saving in minutes, hours or percent — **including "could save"**.
 - Any claim about match results, points, injury rates or player availability outcomes.
@@ -221,7 +221,7 @@ EWE-74's fourth acceptance criterion — *"No unsupported customer relationship,
 
 **Ownership.** [`five-minute-demo-script.md`](./five-minute-demo-script.md) is authoritative for what is delivered on stage; it carries a trimmed 93-word version of the text below and moves the closing sentence to beat 7. **Deliver the script's version.** This section is the source it was trimmed from, kept here so the claims can be audited against §1 and §6 if the wording changes.
 
-> "We don't have a customer. What we have is a specific person we built this for: the opposition analyst at a professional first team, the one who writes the pre-match briefing.
+> "Our provisional target is PSV — relationship: target, not yet contacted; may change. We built this for the opposition analyst at a professional first team, the one who writes the pre-match briefing.
 >
 > The decision we're targeting is narrow. They draft the briefing, then something changes — a player isn't available — and they have to work out which of their recommendations still stand. That last step is the bet. Everything in this product exists to make it fast and defensible.
 >
@@ -237,15 +237,15 @@ Adjust the last line to what the owner will commit to. **Do not adjust the first
 
 ## 8. Escalation — the named-customer expectation
 
-EWE-74's final deliverable: *"Resolve the event named-customer expectation with the owner/mentor if no validated customer exists."* No validated customer exists. **PENDING Ewerton.** This is the only item in this document on the hackathon clock, and it needs resolving before the submission packet is assembled.
+EWE-74's final deliverable: *"Resolve the event named-customer expectation with the owner/mentor if no validated customer exists."* Organisation is provisionally named **PSV** (target, assumed; may change). No validated customer, interview, or pilot agreement exists. Outreach and named individual remain **PENDING Ewerton**. EWE-75 rehearse/submit is **ON HOLD** until the owner lifts it. This section still gates what goes in the submission packet when work resumes.
 
 **Ask the owner or mentor:**
 
-1. Does the submission require a *named* customer, or a clearly-defined target with an honest validation status? The project record does not say which, and the answer changes what goes in the packet.
-2. If a name is required, is there a real contact fitting §2 who could be asked before the demo — with the relationship labelled exactly as it is, most likely "target, not yet contacted"?
+1. Does the submission require a *named* customer, or a clearly-defined target with an honest validation status? The project record does not say which, and the answer changes what goes in the packet. *(Provisional answer on 2026-09-23: named target PSV is recorded; relationship stays target / not contacted.)*
+2. If a name is required, is there a real contact fitting §2 who could be asked before the demo — with the relationship labelled exactly as it is, most likely "target, not yet contacted"? *(Organisation named provisionally as PSV; named individual and outreach still gated.)*
 3. Are the three questions in §4 authorised to be sent? EWE-74 explicitly gates outreach on the owner's authorisation.
 
-**If a name is required and none can be obtained in time**, present the target profile as a profile and say plainly that no relationship exists. §7 is written for exactly that case. Naming a club that has not been contacted would breach the project's own gate that no unsupported customer relationship appears in the pitch, and is a worse outcome than the gap.
+**If a name is required and none can be obtained in time**, present the target profile as a profile and say plainly that no relationship exists. §7 is written for exactly that case. Naming a club that has not been contacted would breach the project's own gate that no unsupported customer relationship appears in the pitch, and is a worse outcome than the gap. *(PSV is allowed only as provisional *target* wording — do not upgrade the label.)*
 
 ---
 
@@ -253,7 +253,7 @@ EWE-74's final deliverable: *"Resolve the event named-customer expectation with 
 
 | Criterion | Status |
 | --- | --- |
-| Named target and validation status are explicit, **or the unresolved gap is clearly recorded** | **Met through the second branch only.** The gap is recorded in §1 and the rubric is in §2. A name is **PENDING** the owner and may never arrive. This criterion is not met in its first form. |
+| Named target and validation status are explicit, **or the unresolved gap is clearly recorded** | **Met via provisional name.** Target = PSV (provisional); relationship = target (assumed), not contacted. |
 | The problem is a specific recurring workflow, not a list of departments | **Met.** One decision, one operator, one trigger, six falsifiable hypotheses. |
 | Pilot success measures and buyer assumptions are concrete | **Met as specification.** Seven measures with definitions, pre-committed thresholds, buyer assumptions labelled as hypotheses with their resolution route. **No measure has a value.** |
 | No unsupported customer relationship, time-saving number or match-performance claim appears in the pitch | **Met in this document.** For the pitch itself, enforceable only by walking §6 before freeze — which has not happened. |
@@ -263,13 +263,13 @@ EWE-74's final deliverable: *"Resolve the event named-customer expectation with 
 ## 10. Blocked on a human
 
 | # | Item | Who | Why it cannot be done here |
-| --- | --- | --- | --- |
-| 1 | **Resolve the named-customer expectation** | Ewerton / mentor | §8. The only item on the hackathon clock; gates the submission packet. |
-| 2 | Select and name the target organisation and individual | Ewerton | Requires the owner's network. Fabricating a name would fail the acceptance criteria. |
-| 3 | Authorise and run the three discovery questions | Ewerton | EWE-74 gates outreach on explicit authorisation. No conversation can be simulated. |
+| --- | --- | --- |
+| 1 | **Resolve the named-customer expectation** | Ewerton / mentor | §8. Organisation provisionally named PSV (2026-09-23); expectation partially addressed. Remaining: confirm whether provisional target is enough for the packet, and whether EWE-75 hold can lift. |
+| 2 | Select and name the target organisation and individual | Ewerton | Organisation done provisionally as PSV (may change). Named individual still open — requires the owner's network. |
+| 3 | Authorise and run the three discovery questions | Ewerton | EWE-74 gates outreach on explicit authorisation. No conversation can be simulated. Still gated. |
 | 4 | Confirm or replace the §5.4 thresholds | Ewerton, ideally with the buyer | Must be fixed before fixture 1 to mean anything |
 | 5 | Secure a pilot partner | Ewerton | Follows conversations that have not happened |
-| 6 | Walk the §6 claims gate against the final slides | Presenter, before freeze | The slides do not exist yet |
+| 6 | Walk the §6 claims gate against the final slides | Presenter, before freeze | The slides do not exist yet. EWE-75 rehearse/submit is ON HOLD (owner 2026-09-23). |
 
 ---
 
