@@ -1,0 +1,12 @@
+{
+  "name": "Squad Screen MVP",
+  "install": "bash -lc 'set -e; export NVM_DIR=\"$HOME/.nvm\"; . \"$NVM_DIR/nvm.sh\"; nvm install; export PATH=\"$(dirname \"$(nvm which \"$(cat .nvmrc)\")\"):$PATH\"; node --version; npm install'",
+  "terminals": [
+    {
+      "name": "next-dev",
+      "description": "Next.js dev server on http://localhost:3000",
+      "command": "bash -lc 'export NVM_DIR=\"$HOME/.nvm\"; . \"$NVM_DIR/nvm.sh\"; nvm install; export PATH=\"$(dirname \"$(nvm which \"$(cat .nvmrc)\")\"):$PATH\"; node --version; npm run dev'"
+    }
+  ],
+  "ports": [{ "name": "next-dev", "port": 3000 }]
+}
