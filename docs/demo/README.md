@@ -2,18 +2,20 @@
 
 Material for the five-minute demonstration and the event submission packet, for [Squad Screen — Match Intelligence MVP](https://linear.app/ewerton-barbosa/project/squad-screen-match-intelligence-mvp-ea524d430d2c).
 
+> **Owner decisions (2026-09-23):** provisional named customer/target is **PSV** (may change; not a deal or outreach auth) — see [`customer-and-pilot.md`](./customer-and-pilot.md). **EWE-75 rehearse/submit is on hold** — do not run rehearsals or submit until the owner lifts the hold.
+
 ## Files and who owns them
 
 Three different issues write into this directory. **Do not edit a file you do not own.**
 
 | File | Owner | State |
 | --- | --- | --- |
-| [`five-minute-demo-script.md`](./five-minute-demo-script.md) | [EWE-75](https://linear.app/ewerton-barbosa/issue/EWE-75/delivery-package-and-rehearse-the-five-minute-demo-and-submission) | Drafted |
-| [`operational-runbook.md`](./operational-runbook.md) | EWE-75 | Drafted; failure modes unobserved |
-| [`submission-checklist.md`](./submission-checklist.md) | EWE-75 | Drafted; most items unsatisfied |
+| [`five-minute-demo-script.md`](./five-minute-demo-script.md) | [EWE-75](https://linear.app/ewerton-barbosa/issue/EWE-75/delivery-package-and-rehearse-the-five-minute-demo-and-submission) | Drafted; rehearse/submit **on hold** |
+| [`operational-runbook.md`](./operational-runbook.md) | EWE-75 | Drafted; failure modes unobserved; rehearse **on hold** |
+| [`submission-checklist.md`](./submission-checklist.md) | EWE-75 | Drafted; rehearse/submit **on hold** per owner |
 | [`limitations.md`](./limitations.md) | EWE-75 | Drafted; needs a pass after EWE-72 and EWE-73 |
-| [`customer-and-pilot.md`](./customer-and-pilot.md) | [EWE-74](https://linear.app/ewerton-barbosa/issue/EWE-74/product-establish-named-customer-problem-evidence-and-four-fixture) | Being landed on `main` by its owner. Until it appears, it is on branch `feat/ewe-74-customer-and-pilot` at `b5093cc` |
-| `model-comparison.md` | [EWE-73](https://linear.app/ewerton-barbosa/issue/EWE-73/eval-run-the-controlled-comparison-and-publish-observed-results), evaluation slice | **Not yet written**, and no branch exists for it |
+| [`customer-and-pilot.md`](./customer-and-pilot.md) | [EWE-74](https://linear.app/ewerton-barbosa/issue/EWE-74/product-establish-named-customer-problem-evidence-and-four-fixture) | On `main`; provisional named target **PSV** (may change) |
+| [`model-comparison.md`](./model-comparison.md) | [EWE-73](https://linear.app/ewerton-barbosa/issue/EWE-73/eval-run-the-controlled-comparison-and-publish-observed-results), evaluation slice | On `main` with live comparison results |
 
 ## Read them in this order
 
@@ -24,8 +26,6 @@ Three different issues write into this directory. **Do not edit a file you do no
 
 ## Current state
 
-`main` was at `6754824` when this was written and carries EWE-60 through EWE-64 — the scaffold and command set, the shared contracts, CI, the fixture packet, the Token Factory adapter and the evidence pipeline. Synthesis, scenarios, the APIs and the entire UI are not there yet. **`main` is moving every few minutes**, so re-check before assembling the packet.
+Product code for EWE-60–EWE-73 and stretch EWE-76–EWE-78 is on `main`. Pilot instruments for EWE-79–EWE-82 are under `docs/pilot/`. Live model comparison is published. **EWE-75 rehearse/submit remains on hold** until the owner resumes it.
 
-The commands in the runbook are real. Everything about what appears on screen is still specification, and no measurement of any kind exists. Each document uses the same three tags: **VERIFIED** (observed), **SPECIFIED** (required behaviour, not yet built), **PENDING** (blocked).
-
-Blocked on Ewerton: `NEBIUS_API_KEY` — now the only mandatory provider variable, since EWE-63 defaulted both model IDs — and the decision on whether a target club is named.
+Blocked on Ewerton (when hold lifts): presenter choice, whether the provisional PSV name stays for the pitch, and optional `SQUAD_SCREEN_PUBLIC_REFRESH` wiring.
